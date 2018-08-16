@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      setings
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+  <ion-content padding>
+  <h1>Personal information</h1>
+  <br>
+
+  <h3>Wellcome to our reminder platform!</h3>
+  <br>Here you can track your base activities, add some reminders, control you day and many other helpfull things.
+  <br> But at first let's add some basic information to your personal profile.
+  <br>
+  <ion-item>
+    <ion-input [(ngModel)]="name" placeholder="Enter your first name" clearInput></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input [(ngModel)]="age" type="number" placeholder="Enter your age"></ion-input>
+  </ion-item>
+  <br>
+  <button ion-button round color="light" (click)="goToNext();">Ready!</button>
+</ion-content>

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      What is this for
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+ <h1>Let's organise</h1>
+  <p>
+   Have you brush your teeth? Do you read enough?
+   Do you waste your time? We are here to help you. <br>
+   No more wasted time!
+  </p>
+  <ion-row>
+  <ion-col align-self: center>
+  <ion-img width="300" height="300" src="../../assets/imgs/organise-fish-solidarity.svg"></ion-img>
+</ion-col>
+</ion-row>
+  <br>
+  <ion-row>
+      <ion-col align-self: center>
+        <button ion-button round color="light"  (click)="goToAbout();">Let's start</button>
+      </ion-col>
+    </ion-row>
+    <ion-fab left bottom #fab4>
+        <button ion-fab color="dark"><ion-icon name="arrow-dropright"></ion-icon></button>
+        <ion-fab-list side="right">
+          <button ion-fab (click)="openSocial('facebook', fab4)"><ion-icon name="logo-facebook"></ion-icon></button>
+          <button ion-fab (click)="openSocial('twitter', fab4)"><ion-icon name="logo-twitter"></ion-icon></button>
+          <button ion-fab (click)="openSocial('vimeo', fab4)"><ion-icon name="logo-vimeo"></ion-icon></button>
+          <button ion-fab (click)="openSocial('googleplus', fab4)"><ion-icon name="logo-googleplus"></ion-icon></button>
+        </ion-fab-list>
+      </ion-fab>
+</ion-content>

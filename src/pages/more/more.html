@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      More
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <h1>Personal information</h1>
+    <br>
+  
+    <h3>Let's go deeper in your daily routine!</h3>
+    <ion-item>
+        <ion-datetime [(ngModel)]="sleepHour" displayFormat="HH:mm" placeholder="Go to bed at:"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-input  [(ngModel)]="wakeupHour" type="number" placeholder="Wake up at:"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-checkbox [(ngModel)]="data.alarm" color="dark"></ion-checkbox>
+          <ion-label>Do you want to add<br> sound reminders?</ion-label>
+        </ion-item>
+    <br>
+    <button ion-button round color="light" (click)="goToNext();">Ready!</button>
+  </ion-content>

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Tasks
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <h1>New Task</h1>
+    <br>
+  
+    <h3>Here you can add new task for today, tomorow or whenever you want</h3>
+    <br>
+    <ion-item>
+      <ion-input [(ngModel)]="task.name" placeholder="Enter short name for the task" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="task.description" placeholder="Enter description" clearInput></ion-input>
+    </ion-item>
+    <ion-toolbar>
+      <ion-item>
+        <ion-label>Choose Type</ion-label>
+        <ion-select [(ngModel)]="task.type" interface="action-sheet">
+          <ion-option value="mute_15">Fixed</ion-option>
+          <ion-option value="mute_1">FixedHours</ion-option>
+          <ion-option value="mute_23">Daily</ion-option>
+          <ion-option value="mute_inf">Floating</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-toolbar>
+    <ion-item>
+      <ion-input [(ngModel)]="task.time" type="number" placeholder="Enter hour(if fixed; 00-24)"></ion-input>
+    </ion-item>
+    <br>
+    <button ion-button round color="light" (click)="goToNext();">Ready!</button>
+  </ion-content>
