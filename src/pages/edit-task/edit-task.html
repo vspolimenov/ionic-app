@@ -6,10 +6,9 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <h1>New Task</h1>
+    <h1>Edit Task {{task.name}}</h1>
     <br>
-  
-    <h3>Here you can add new task for today, tomorow or whenever you want</h3>
+    <h3>Here you can edit your task</h3>
     <br>
     <ion-item>
       <ion-input [(ngModel)]="task.name" placeholder="Enter short name for the task" clearInput></ion-input>
@@ -43,16 +42,15 @@
           <ion-checkbox [(ngModel)]="isFixed" color="dark"></ion-checkbox>
           <ion-label>Stop task reminder<br></ion-label>
         </ion-item>
-        <ion-item>
-            <ion-checkbox [(ngModel)]="task.pinned" color="dark"></ion-checkbox>
-            <ion-label>Pin task<br></ion-label>
-          </ion-item>
     <br>
     <ion-fab left bottom #fab>
         <button ion-fab color="dark">
           <ion-icon name="arrow-dropright"></ion-icon>
         </button>
         <ion-fab-list side="right">
+            <button ion-fab   (click)="deleteTask(fab);">
+                <ion-icon name="trash"></ion-icon>
+            </button>
           <button ion-fab (click)="goBack(fab);">
               <ion-icon name="arrow-back"></ion-icon>
           </button>      

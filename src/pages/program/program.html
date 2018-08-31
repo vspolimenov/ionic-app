@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+        Daily Program
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <br>
+  <h1 text-center>Daily Program <br>{{todaysDate | date: 'shortDate'}}</h1>
+  <br>
+  <ul>
+      <div  *ngFor="let number of [00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]">
+        <h3 *ngIf="number <= sleepHour && number >= wakeupHour" style="color:rgb(0, 104, 69)"><br>{{number}}:00</h3>
+        <h3 *ngIf="number > sleepHour || number < wakeupHour" style="color:brown"><br>{{number}}:00</h3>
+        <h3 text-center *ngIf="number == wakeupHour" style="color:rgb(0, 104, 69)"> Wake up</h3>
+        <h3 text-center *ngIf="number == sleepHour" style="color:rgb(0, 104, 69)"> Go to sleep</h3>
+        <div *ngFor="let task of tasks">
+            <div *ngIf="(task.time | slice:0:2) == number">
+           <p *ngIf="task.isDone" (click)="showInfoStateChange(task)" style="color:rgb(199, 171, 12)"> <ion-icon name="star" color="bright"></ion-icon> {{task.name}}      <br></p> 
+      
+           <p *ngIf="!task.isDone" (click)="showInfoStateChange(task)"> <ion-icon name="star" color="bright"></ion-icon> {{task.name}}  <br></p> 
+           
+           <p *ngIf="task.showInfo">Time: {{task.time}} </p> 
+           <p *ngIf="task.showInfo"> {{task.description}} </p> 
+          
+          </div>
+          </div> </div>
+    </ul>
+    <br><br><br>
+    <ion-fab left bottom #fab>
+        <button ion-fab color="dark">
+          <ion-icon name="arrow-dropright"></ion-icon>
+        </button>
+        <ion-fab-list side="right">
+          <button ion-fab (click)="goToNext(fab);">
+              <ion-icon name="home"></ion-icon>
+          </button>
+          <button ion-fab   (click)="previousDay();">
+              <ion-icon name="arrow-back"></ion-icon>
+          </button>
+          <button ion-fab  (click)="nextDay();">
+              <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-fab-list>
+      </ion-fab>
+</ion-content>

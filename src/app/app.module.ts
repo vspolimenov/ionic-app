@@ -1,3 +1,6 @@
+import { EditTaskPage } from './../pages/edit-task/edit-task';
+import { DatePipe } from '@angular/common';
+import { Program } from './../pages/program/program';
 import { NewTaskPage } from './../pages/new-task/new-task';
 import { MainPage } from './../pages/main/main';
 import { MorePage } from './../pages/more/more';
@@ -11,6 +14,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { IonicStorageModule } from '@ionic/storage';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 @NgModule({
   declarations: [
     MyApp,
@@ -18,7 +22,9 @@ import { IonicStorageModule } from '@ionic/storage';
     SetingsPage,
     MorePage,
     MainPage,
-    NewTaskPage
+    NewTaskPage,
+    Program,
+    EditTaskPage
   ],
   imports: [
     BrowserModule,
@@ -32,12 +38,15 @@ import { IonicStorageModule } from '@ionic/storage';
     SetingsPage, 
     MorePage,
     MainPage,
-    NewTaskPage
+    NewTaskPage,
+    Program,
+    EditTaskPage
   ],
   providers: [
-    StatusBar,
     SplashScreen,
     BackgroundMode,
+    DatePipe,
+    LocalNotifications,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

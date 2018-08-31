@@ -10,16 +10,26 @@
     <br>
   
     <h3>Let's go deeper in your daily routine!</h3>
+    <form [formGroup]="todo">
     <ion-item>
-        <ion-datetime [(ngModel)]="sleepHour" displayFormat="HH:mm" placeholder="Go to bed at:"></ion-datetime>
+      <ion-input [(ngModel)]="sleepHour" formControlName="sleepHour" type="number" placeholder="Go to bed at:"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-input  [(ngModel)]="wakeupHour" type="number" placeholder="Wake up at:"></ion-input>
+        <ion-input  [(ngModel)]="wakeupHour"  formControlName="wakeupHour" type="number" placeholder="Wake up at:"></ion-input>
       </ion-item>
-      <ion-item>
-          <ion-checkbox [(ngModel)]="data.alarm" color="dark"></ion-checkbox>
-          <ion-label>Do you want to add<br> sound reminders?</ion-label>
-        </ion-item>
-    <br>
-    <button ion-button round color="light" (click)="goToNext();">Ready!</button>
+     
+    <ion-fab left bottom #fab>
+        <button ion-fab color="dark">
+          <ion-icon name="arrow-dropright"></ion-icon>
+        </button>
+        <ion-fab-list side="right">
+          <button ion-fab (click)="goBack();">
+              <ion-icon name="arrow-back"></ion-icon>
+          </button>
+          <button ion-fab [disabled]="!todo.valid"   (click)="goToNext();">
+              <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-fab-list>
+      </ion-fab>
+    </form>
   </ion-content>

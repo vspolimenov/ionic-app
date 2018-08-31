@@ -8,7 +8,7 @@
 
 
 
-  <ion-content padding>
+<ion-content padding>
   <h1>Personal information</h1>
   <br>
 
@@ -16,12 +16,15 @@
   <br>Here you can track your base activities, add some reminders, control you day and many other helpfull things.
   <br> But at first let's add some basic information to your personal profile.
   <br>
-  <ion-item>
-    <ion-input [(ngModel)]="name" placeholder="Enter your first name" clearInput></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-input [(ngModel)]="age" type="number" placeholder="Enter your age"></ion-input>
-  </ion-item>
-  <br>
-  <button ion-button round color="light" (click)="goToNext();">Ready!</button>
+
+  <form [formGroup]="todo">
+    <ion-item>
+      <ion-input [(ngModel)]="name" placeholder="Enter your first name" formControlName="name" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="age" type="number" formControlName="age" placeholder="Enter your age"></ion-input>
+    </ion-item>
+    <br>
+    <button ion-button round color="light" type="submit" (click)="goToNext();" [disabled]="!todo.valid">Ready!</button>
+  </form>
 </ion-content>
