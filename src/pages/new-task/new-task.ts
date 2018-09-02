@@ -13,13 +13,13 @@ export class NewTaskPage {
   task:Task;
   taskSeq:number;
   isFixed:boolean;
-
+  error:boolean;
 
   constructor(public navCtrl: NavController,  private storage: Storage,  public localNotifications: LocalNotifications,
     public platform: Platform,
     public alertCtrl: AlertController) {
     this.task = new Task;
-
+      this.error = false;
     this.storage.get('taskSeq').then((val) => {
     
       this.storage.set('taskSeq',val+1);
@@ -29,6 +29,11 @@ export class NewTaskPage {
 
  
   goToNext(){
+    if(!this.task.name || this.task.name.trim()  == ""  ||
+    !this.task.date || this.task.date.trim()  == "" ) {
+      this.error = true;
+      return;
+    }
  
   var date = new Date(this.task.date + " " + this.task.time);
   console.log(date);
@@ -50,11 +55,11 @@ export class NewTaskPage {
     this.task.taskId = this.taskSeq;
     this.storage.set(this.taskSeq + "task",this.task);
     
-    this.navCtrl.push(MainPage);
+    this.navCtrl.pop(); 
     
   }
   goBack(fab: FabContainer){
     fab.close();
-    this.navCtrl.push(MainPage);    
+    this.navCtrl.pop();    
 	}
 }

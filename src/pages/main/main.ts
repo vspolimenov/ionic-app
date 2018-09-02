@@ -4,7 +4,7 @@ import { HomePage } from './../home/home';
 import { Task } from './task';
 import { SetingsPage } from './../setings/setings';
 import { Component } from '@angular/core';
-import { NavController, FabContainer } from 'ionic-angular';
+import { NavController, FabContainer, AlertController } from 'ionic-angular';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { Storage } from '@ionic/storage';
 import { NewTaskPage } from '../new-task/new-task';
@@ -13,6 +13,7 @@ import { NewTaskPage } from '../new-task/new-task';
   templateUrl: 'main.html'
 })
 export class MainPage {
+  remainigToSleepHours:string;
   sleepHour: number;
   wakeupHour:number;
   todaysDate:Date;
@@ -36,13 +37,14 @@ export class MainPage {
       this.storage.set(task.taskId + "task", task);
     } else {
       task.isDone = true;
+      this.pinnedTasks = this.pinnedTasks.filter(deleted => deleted.taskId !== task.taskId);
       this.storage.set(task.taskId + "task", task);
     }
   }
  
-  constructor(private backgroundMode: BackgroundMode, public navCtrl: NavController, private storage: Storage) {
+  constructor(private backgroundMode: BackgroundMode, public navCtrl: NavController,public alertCtrl: AlertController, private storage: Storage) {
     let sleepHour: number;
-  
+    
     this.apps = 'top';
     this.backgroundMode.enable();
     this.storage.get('name').then((val) => {
@@ -61,7 +63,7 @@ export class MainPage {
         this.storage.get(val - 1 + "task").then((task) => {
           if(task){
           console.log(task);
-          if(task.pinned) {
+          if(task.pinned && task.isDone == false) {
             this.calculateRemainig(task);
             this.pinnedTasks.push(task);
           }
@@ -108,7 +110,17 @@ export class MainPage {
   }
   goToNext(fab?: FabContainer){
     fab.close();
-    this.navCtrl.push(HomePage);
+    let alert = this.alertCtrl.create({
+      title: 'Are you sure you want to delete this accout!',
+      subTitle: 'All your data will be lost',
+      buttons: [ {text: 'Delete',
+      handler: data => {
+        this.navCtrl.push(HomePage);
+      }
+    }, 'Cancel']
+    });
+    alert.present();
+
 
   }
   goToProgram(fab?: FabContainer){
@@ -135,79 +147,31 @@ export class MainPage {
       }
       console.log(new Date().getHours() +" sleep: " + val);
       console.log(this.timeInSeconds + "chepp");
-      this.initTimer();
-      this.startTimer();
-              
+      let goToSleepTask:Task;
+            goToSleepTask = new Task();
+            goToSleepTask.date = new Date().toString();
+            goToSleepTask.time = val;
+            this.todaysDate = new Date();
+            if(this.todaysDate.getHours() - val < 0){
+              console.log(val); 
+             goToSleepTask .remaining = "in " + ( val - this.todaysDate.getHours()) + "h";
+            } else if(this.todaysDate.getHours() - val == 0){
+              goToSleepTask.remaining ="in < 1h";
+            } else if(this.todaysDate.getHours() - val > 0 && this.todaysDate.getHours() - val <= 3 ) {
+              goToSleepTask .remaining = "before " +  (- val + this.todaysDate.getHours()) + "h";
+            } else {
+              let nexDay:number;
+              nexDay = val - this.todaysDate.getHours() + 24;
+
+              goToSleepTask .remaining = "in " +  nexDay + "h";
+            }
+          console.log(goToSleepTask.remaining + "remaining");
+          this.remainigToSleepHours = goToSleepTask.remaining;
     })
     });
 
   }
 
-  initTimer() {
-
-
-    if (!this.timeInSeconds) {
-      this.timeInSeconds = 1500;
-    }
-
-    this.time = this.timeInSeconds;
-    this.runTimer = false;
-    this.hasStarted = false;
-    this.hasFinished = false;
-    this.remainingTime = this.timeInSeconds;
-
-    this.displayTime = this.getSecondsAsDigitalClock(this.remainingTime);
-
-  }
-
-  startTimer() {
-    this.runTimer = true;
-    this.hasStarted = true;
-    this.timerTick();
-  }
-
-  pauseTimer() {
-    this.runTimer = false;
-  }
-
-  resumeTimer() {
-    this.startTimer();
-  }
-
-  timerTick() {
-    setTimeout(() => {
-
-      if (!this.runTimer) { return; }
-      this.remainingTime--;
-      this.displayTime = this.getSecondsAsDigitalClock(this.remainingTime);
-      if (this.remainingTime > 0) {
-        this.timerTick();
-      }
-      else {
-        this.hasFinished = true;
-      }
-    }, 1000);
-  }
-
-  getSecondsAsDigitalClock(inputSeconds: number) {
-    if (inputSeconds < 0) {
-      secondsString = "to go"
-      return secondsString;
-    }
-    var sec_num = parseInt(inputSeconds.toString(), 10); // don't forget the second param
-    var hours = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    var seconds = sec_num - (hours * 3600) - (minutes * 60);
-    var hoursString = '';
-    var minutesString = '';
-    var secondsString = '';
-    hoursString = hours.toString() + 'h';
-   if (hours == 0) {
-      minutesString = " < 1h";
-      return minutesString;
-    } 
-    return hoursString;
-  }
   changeTask(task:Task) {
     this.storage.set('editedTask', task.taskId);
     this.navCtrl.push(EditTaskPage);

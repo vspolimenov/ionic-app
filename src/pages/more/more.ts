@@ -14,17 +14,17 @@ import { Storage } from '@ionic/storage';
 export class MorePage {
   public todo: FormGroup;
   taskSeq: number;
-  // sleepHour: number;
-  // wakeupHour: number;
+  error:boolean;
   constructor(public navCtrl: NavController,
     private storage: Storage,
     private datePipe: DatePipe,
     public localNotifications: LocalNotifications,
     private formBuilder: FormBuilder) {
-      this.todo = this.formBuilder.group({
-        sleepHour: ['', Validators.required],
-        wakeupHour: ['', Validators.required],
-        });
+      this.error = false;
+    this.todo = this.formBuilder.group({
+      sleepHour: ['', Validators.required],
+      wakeupHour: ['', Validators.required],
+    });
   }
   public createTask(name: string, hour: string) {
     let task = new Task();
@@ -49,21 +49,28 @@ export class MorePage {
   };
   goToNext() {
     this.taskSeq = 0;
-   // console.log(this.wakeupHour);
-    if (this.todo.get('wakeupHour').value < 10) {
-      this.createTask("Morning teeth brush", "0" + this.todo.get('wakeupHour').value + ":00");
-      this.taskSeq = 1;
-      this.createTask("Morning 15 min meditation", "0" + this.todo.get('wakeupHour').value + ":00");
-      this.taskSeq = 2;
+    // console.log(this.wakeupHour);
+    if (this.todo.get('wakeupHour').value < 0
+      || this.todo.get('wakeupHour').value > 24
+      || this.todo.get('sleepHour').value < 0
+      || this.todo.get('sleepHour').value > 24) {
+        this.error = true;
+        return;
+      }
+      if (this.todo.get('wakeupHour').value.length < 2) {
+        this.createTask("Morning teeth brush", "0" + this.todo.get('wakeupHour').value + ":00");
+        this.taskSeq = 1;
+        this.createTask("Morning 15 min meditation", "0" + this.todo.get('wakeupHour').value + ":00");
+        this.taskSeq = 2;
 
-    } else {
-      this.createTask("Morning teeth brush", this.todo.get('wakeupHour').value + ":00");
-      this.taskSeq = 1;
-      this.createTask("Morning 15 min meditation", this.todo.get('wakeupHour').value + ":00");
-      this.taskSeq = 2;
+      } else {
+        this.createTask("Morning teeth brush", this.todo.get('wakeupHour').value + ":00");
+        this.taskSeq = 1;
+        this.createTask("Morning 15 min meditation", this.todo.get('wakeupHour').value + ":00");
+        this.taskSeq = 2;
 
-    }
-    if (this.todo.get('sleepHour').value < 10) {
+      }
+    if (this.todo.get('sleepHour').value.length < 2) {
       this.createTask("Night teeth brush", "0" + this.todo.get('sleepHour').value + ":00");
     } else {
       this.createTask("Night teeth brush", this.todo.get('sleepHour').value + ":00");

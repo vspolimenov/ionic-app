@@ -35,13 +35,23 @@
         <ion-datetime displayFormat="HH:mm" min="2018" max="2019" [(ngModel)]="task.time"></ion-datetime>
     </ion-item>
     <ion-item>
-        <ion-label>Enter starting day of task</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2018" max="2019" [(ngModel)]="task.date"></ion-datetime>
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2018" max="2019" placeholder="Enter starting day of task" [(ngModel)]="task.date"></ion-datetime>
       </ion-item>
-      <ion-item>
+      <!-- <ion-item>
           <ion-checkbox [(ngModel)]="isFixed" color="dark"></ion-checkbox>
           <ion-label>Stop task reminder<br></ion-label>
-        </ion-item>
+        </ion-item> -->
+        <ion-item>
+            <ion-checkbox [(ngModel)]="task.isDone" color="dark"></ion-checkbox>
+            <ion-label>Not Done<br></ion-label>
+          </ion-item>
+        <ion-item>
+            <ion-checkbox [(ngModel)]="task.pinned" color="dark"></ion-checkbox>
+            <ion-label>Pin task<br></ion-label>
+          </ion-item>
+          <p *ngIf="error">Invalid input!</p>
+    <br>  <br>
+    <br>  <br>
     <br>
     <ion-fab left bottom #fab>
         <button ion-fab color="dark">
