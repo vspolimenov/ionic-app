@@ -61,7 +61,8 @@ export class MainPage {
      public localNotifications: LocalNotifications,
        private datePipe: DatePipe,
         private storage: Storage,
-        public services:Services) {
+        public services:Services,
+        public alertCtrl: AlertController) {
     let sleepHour: number;
     
     this.apps = 'top';
