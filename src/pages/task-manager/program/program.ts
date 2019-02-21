@@ -90,7 +90,7 @@ export class Program {
   goToNext(fab: FabContainer){
     fab.close();
 
-    this.navCtrl.push(MainPage);
+    this.navCtrl.pop();
 
   }
   showInfoStateChange(task: Task) {

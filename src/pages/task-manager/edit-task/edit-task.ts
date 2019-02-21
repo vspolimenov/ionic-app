@@ -13,13 +13,15 @@ export class EditTaskPage {
   task:Task;
   taskSeq:number;
   noReminder:boolean;
+  isFixed:boolean;
+  error:boolean;
   constructor(public navCtrl: NavController,  private storage: Storage,  public localNotifications: LocalNotifications,
     public platform: Platform,
     public alertCtrl: AlertController) {
     this.task = new Task();
     this.storage.get('editedTask').then((val: number) => {
       this.taskSeq = val;
-  
+      this.error = false;
       this.storage.get(val + "task").then((task: Task) => {
         console.log(task);
         this.task.name = task.name;
@@ -47,6 +49,14 @@ export class EditTaskPage {
   }
  
   goToNext(fab: FabContainer){
+    if(!this.task.name || this.task.name.trim()  == ""  ||
+    !this.task.date || this.task.date.trim()  == ""  ) {
+      this.error = true;
+      return;
+    }
+    if(!this.isFixed) {
+      this.task.time = "12:00";
+    }
     fab.close();
     var date = new Date(this.task.date + " " + this.task.time);
   console.log(date);
@@ -70,10 +80,11 @@ export class EditTaskPage {
     this.task.taskId = this.taskSeq;
     console.log("taskche " + this.task.date);
     this.storage.set(this.taskSeq + "task",this.task);
-    this.navCtrl.push(MainPage);    
+    this.navCtrl.pop();    
   }
   goBack(fab: FabContainer){
     fab.close();
-    this.navCtrl.push(MainPage);    
+ 
+    this.navCtrl.pop();    
 	}
 }

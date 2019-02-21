@@ -11,8 +11,10 @@
   
     <h3>Let's go deeper in your daily routine!</h3>
     <form [formGroup]="todo">
+        <p> Enter hour in format 00-24</p>
     <ion-item>
-      <ion-input [(ngModel)]="sleepHour" formControlName="sleepHour" type="number" placeholder="Go to bed at:"></ion-input>
+    
+      <ion-input [(ngModel)]="sleepHour"  formControlName="sleepHour" type="number" placeholder="Go to bed at:"></ion-input>
     </ion-item>
     <ion-item>
         <ion-input  [(ngModel)]="wakeupHour"  formControlName="wakeupHour" type="number" placeholder="Wake up at:"></ion-input>

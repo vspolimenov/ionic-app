@@ -27,4 +27,5 @@
     <br>
     <button ion-button round color="light" type="submit" (click)="goToNext();" [disabled]="!todo.valid">Ready!</button>
   </form>
+  <p *ngIf="error">Invalid input!</p>
 </ion-content>

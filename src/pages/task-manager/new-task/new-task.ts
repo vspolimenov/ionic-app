@@ -49,11 +49,11 @@ export class NewTaskPage {
     this.task.durations =  [,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,] ;
     this.storage.set(this.taskSeq + "task",this.task);
     
-    this.navCtrl.push(MainPage);
+    this.navCtrl.pop(); 
     
   }
   goBack(fab: FabContainer){
     fab.close();
-    this.navCtrl.push(MainPage);    
+    this.navCtrl.pop();    
 	}
 }

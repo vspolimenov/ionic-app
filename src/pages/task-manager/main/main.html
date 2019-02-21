@@ -9,9 +9,6 @@
 <ion-content padding>
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="apps">
-      <ion-segment-button value="done">
-        Done
-      </ion-segment-button>
       <ion-segment-button value="notdone">
         TO DO
       </ion-segment-button>
@@ -82,7 +79,7 @@
     </div>
   </ion-item>
   <br>
-  <ion-item *ngIf="apps == 'all'">
+  <ion-item *ngIf="apps == 'all'" class="background-component" >
     <h1 text-center>All Tasks</h1>
     <br>
     <div *ngFor="let task of tasks">
@@ -93,7 +90,7 @@
   </ion-item>
   <br>
   <br>
-
+<br>
   <ion-fab left bottom #fab>
     <button ion-fab color="dark">
       <ion-icon name="arrow-dropright"></ion-icon>

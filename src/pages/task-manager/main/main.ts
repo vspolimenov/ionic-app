@@ -9,7 +9,7 @@ import { HomePage } from './../home/home';
 import { Task } from './task';
 import { SetingsPage } from './../setings/setings';
 import { Component } from '@angular/core';
-import { NavController, FabContainer } from 'ionic-angular';
+import { NavController, FabContainer, AlertController } from 'ionic-angular';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { Storage } from '@ionic/storage';
 import { NewTaskPage } from '../new-task/new-task';
@@ -18,6 +18,7 @@ import { NewTaskPage } from '../new-task/new-task';
   templateUrl: 'main.html'
 })
 export class MainPage {
+  remainigToSleepHours:string;
   sleepHour: number;
   wakeupHour:number;
   todaysDate:Date;
@@ -62,7 +63,7 @@ export class MainPage {
         private storage: Storage,
         public services:Services) {
     let sleepHour: number;
-  
+    
     this.apps = 'top';
     this.backgroundMode.enable();
     this.storage.get('name').then((val) => {
@@ -191,7 +192,17 @@ export class MainPage {
   }
   goToNext(fab?: FabContainer){
     fab.close();
-    this.navCtrl.push(HomePage);
+    let alert = this.alertCtrl.create({
+      title: 'Are you sure you want to delete this accout!',
+      subTitle: 'All your data will be lost',
+      buttons: [ {text: 'Delete',
+      handler: data => {
+        this.navCtrl.push(HomePage);
+      }
+    }, 'Cancel']
+    });
+    alert.present();
+
 
   }
   goToFinance(fab?: FabContainer){

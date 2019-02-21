@@ -60,11 +60,11 @@ export class MorePage {
       this.createTask("Morning 15 min meditation", this.todo.get('wakeupHour').value + ":00");
       this.taskSeq = 2;
 
-    } else {
-      this.createTask("Morning teeth brush", this.todo.get('wakeupHour').value + ":00");
-      this.taskSeq = 1;
-      this.createTask("Morning 15 min meditation", this.todo.get('wakeupHour').value + ":00");
-      this.taskSeq = 2;
+      } else {
+        this.createTask("Morning teeth brush", this.todo.get('wakeupHour').value + ":00");
+        this.taskSeq = 1;
+        this.createTask("Morning 15 min meditation", this.todo.get('wakeupHour').value + ":00");
+        this.taskSeq = 2;
 
     }
     console.log(this.todo.get('sleepHour').value);
