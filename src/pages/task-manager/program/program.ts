@@ -1,3 +1,4 @@
+import { Services } from './../services';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { DatePipe } from '@angular/common';
 import { Task } from './../main/task';
@@ -17,7 +18,8 @@ export class Program {
   tasks: Array<Task> = [];
   constructor(public navCtrl: NavController, private storage: Storage, private datePipe: DatePipe,  public localNotifications: LocalNotifications,
     public platform: Platform,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    public services:Services) {
     this.todaysDate = new Date();
     this.setProgram();
   }
@@ -27,50 +29,43 @@ export class Program {
   setProgram() {
     this.tasks = new Array<Task>();
     this.storage.get('sleepHour').then((val: number) => {
-      console.log(val);
       this.sleepHour = +val;
-
-      console.log(this.sleepHour);
       this.storage.get('wakeupHour').then((val) => {
         this.wakeupHour = +val;
-
-
         this.storage.get('taskSeq').then((val: number) => {
-          console.log(val);
           while (val != 0) {
             this.storage.get(val - 1 + "task").then((task: Task) => {
               if (task) {
-                console.log(task + ": " + this.todaysDate);
                 if (task.date == this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd')) {
-
                   this.tasks.push(task);
                 }
                 else if (task.type == "Everyday") {
                   var date = new Date(this.todaysDate + " " + task.time);
-                  console.log(date);
                   this.localNotifications.schedule({
                     text: task.name,
                     trigger: { at: date },
                     led: 'FF0000'
                   });
+                  console.log(this.todaysDate.getDay());
+                  task.currentDuration = task.durations[this.todaysDate.getDay()];
                   this.tasks.push(task);
-                } else if (task.type == "Weekly" && this.isWeekday()) {
+                } else if (task.type == "Weekly" && this.services.isWeekday(this.todaysDate)) {
                   var date = new Date(this.todaysDate + " " + task.time);
-                  console.log(date);
                   this.localNotifications.schedule({
                     text: task.name,
                     trigger: { at: date },
                     led: 'FF0000'
                   });
+                  task.currentDuration = task.durations[this.todaysDate.getDay()];
                   this.tasks.push(task);
-                } else if (task.type == "Weekend" && !this.isWeekday()) {
+                } else if (task.type == "Weekend" && !this.services.isWeekday(this.todaysDate)) {
                   var date = new Date(this.todaysDate + " " + task.time);
-                  console.log(date);
                   this.localNotifications.schedule({
                     text: task.name,
                     trigger: { at: date },
                     led: 'FF0000'
                   });
+                  task.currentDuration = task.durations[this.todaysDate.getDay()];
                   this.tasks.push(task);
                 }
               }
@@ -105,15 +100,5 @@ export class Program {
       task.showInfo = true;
     }
   }
-  isWeekday(): boolean {
-    let dayOfWeek = this.datePipe.transform(this.todaysDate, 'EEE');
-    console.log("week " + dayOfWeek);
-    if (dayOfWeek == "Sun") {
-      return false;
-    } else if (dayOfWeek == "Sat") {
-      return false
-    }
-    return true;
-  }
+ 
 }
-//<ion-datetime displayFormat="HH:mm" [(ngModel)]="parisTime"></ion-datetime>

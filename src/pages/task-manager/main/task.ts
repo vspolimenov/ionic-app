@@ -4,7 +4,8 @@ export class Task {
 
     public constructor (){}
     public  name:string;
-    public  duration:number;
+    public  durations:string[];
+    public currentDuration:string;
     public  time:string;
     public date:string;
     public isDone:boolean;
@@ -15,4 +16,8 @@ export class Task {
     public showInfo:boolean;
     public pinned:boolean;
     public remaining:string;
+    public isFixed:boolean;
+    public startTime:number;
+    public endTime:number;
+    public isStarted:boolean;
 }

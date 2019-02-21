@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-toolbar no-border-top >
+  <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="apps">
       <ion-segment-button value="done">
         Done
@@ -15,62 +15,71 @@
       <ion-segment-button value="notdone">
         TO DO
       </ion-segment-button>
-      <ion-segment-button value="all" >
-         All Tasks
-        </ion-segment-button>
-      <ion-segment-button value="top" >
+      <ion-segment-button value="all">
+        All Tasks
+      </ion-segment-button>
+      <ion-segment-button value="top">
         My Day
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-  
+
   <br>
   <div *ngFor="let task of tasks">
     <ion-item *ngIf="apps == 'done' && task.isDone">
-        <h1 text-center>Done</h1>
-        <br>
+      <h1 text-center>Done</h1>
+      <br>
       <ion-checkbox [(ngModel)]="task.isDone" disabled="true"></ion-checkbox>
       <ion-label>{{task.name}} </ion-label>
     </ion-item>
     <ion-item *ngIf="apps == 'notdone' && !task.isDone">
-        <h1 text-center>To Do</h1>
-        <br>
+      <h1 text-center>To Do</h1>
+      <br>
       <ion-checkbox (click)="changeState(task)" disabled="false"></ion-checkbox>
       <ion-label>{{task.name}}</ion-label>
     </ion-item>
   </div>
   <ion-item *ngIf="apps == 'top'">
-      <h1 text-center>My Day</h1>
-      <br>
-      <ion-item>
-    <h2 > <ion-icon name="star" color="bright"></ion-icon> You have {{displayTime}} to bed!</h2>
-  </ion-item>
+    <h1 text-center>My Day</h1>
     <br>
     <ion-item>
-    <h2>
-      <ion-icon name="star" color="bright"></ion-icon> Free time: 30 min</h2>
+      <h2>
+        <ion-icon name="star" color="bright"></ion-icon> You have {{displayTime}} to bed!</h2>
     </ion-item>
-      <br>
+    <br>
     <ion-item>
-    <h2>
-      <ion-icon name="star" color="bright"></ion-icon> Activities: {{tasksLength}}</h2>
-    </ion-item>
-      <br>
-    <ion-item>
-    <h2>
-      <ion-icon name="star" color="bright"></ion-icon> Productivity: 66%</h2>
+      <h2>
+        <ion-icon name="star" color="bright"></ion-icon> Activities: {{tasksLength}}</h2>
     </ion-item>
     <br>
     <br>
     <br>
-  <h1 text-center>Pinned Tasks:</h1>
-        <div *ngFor="let task of pinnedTasks" >
-            <ion-item>
-                <h2>  <ion-icon name="star" color="bright"></ion-icon> {{task.name}} {{task.remaining}} </h2>
-            </ion-item>
-          </div>
     <br>
-
+    <h1 text-center>Pinned Tasks For Today:</h1>
+    <div *ngFor="let task of pinnedTasks">
+      <br>
+      <h2 (click)="showInfoStateChange(task)">
+        <ion-icon name="star" color="bright"></ion-icon> {{task.name}} {{task.remaining}} </h2>
+      <h3 *ngIf="!task.isStarted && task.showInfo">
+        <ion-item>
+          <ion-checkbox (click)="startTask(task)" color="dark"></ion-checkbox>
+          <ion-label>Start Task
+            <br>
+          </ion-label>
+        </ion-item>
+      </h3>
+      <h3 *ngIf="task.isStarted && task.showInfo">
+        <ion-item>
+          <ion-checkbox (click)="stopTask(task)" color="dark"></ion-checkbox>
+          <ion-label>Stop Task
+            <br>
+          </ion-label>
+        </ion-item>
+      </h3>
+      <h3 *ngIf="task.currentDuration != '0' && task.showInfo">
+        {{task.currentDuration }}
+      </h3>
+    </div>
   </ion-item>
   <br>
   <ion-item *ngIf="apps == 'all'">
@@ -78,7 +87,7 @@
     <br>
     <div *ngFor="let task of tasks">
       <ion-item (click)="changeTask(task)">
-      {{task.name}} 
+        {{task.name}}
       </ion-item>
     </div>
   </ion-item>
@@ -91,22 +100,25 @@
     </button>
     <ion-fab-list side="right">
       <button ion-fab (click)="goToNext(fab);">
-          <ion-icon name="trash"></ion-icon>
+        <ion-icon name="trash"></ion-icon>
       </button>
       <button ion-fab (click)="refresh();">
-          <ion-icon name="refresh"></ion-icon>
+        <ion-icon name="refresh"></ion-icon>
       </button>
-      <button *ngIf="apps != 'all'" ion-fab  (click)="goToProgram(fab);">
-          <ion-icon name="calendar"></ion-icon>
+      <button ion-fab (click)="goToProgram(fab);">
+        <ion-icon name="calendar"></ion-icon>
       </button>
-      <button *ngIf="apps == 'all'"  ion-fab  (click)="goToNewTask(fab);">
-          <ion-icon name="add-circle"></ion-icon>
+      <button ion-fab (click)="goToNewTask(fab);">
+        <ion-icon name="add-circle"></ion-icon>
+      </button>
+      <button ion-fab (click)="goToFinance(fab);">
+        <ion-icon name="logo-usd"></ion-icon>
       </button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>
 
-<ion-footer>
+<!-- <ion-footer>
   <ion-toolbar>
     <ion-item>
       <ion-label>Mute Notifications</ion-label>
@@ -119,4 +131,4 @@
     </ion-item>
 
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

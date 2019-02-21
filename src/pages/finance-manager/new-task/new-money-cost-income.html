@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Money
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <h1>Income/Cost</h1>
+    <br>
+  
+    <h3>Here you can add new income or cost to your amount</h3>
+    <br>
+    <h2>{{error}}</h2>
+    <ion-item>
+      <ion-input [(ngModel)]="income.name" placeholder="Enter short name" maxlength="20" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="income.description" placeholder="Enter description" maxlength="30" clearInput></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input [(ngModel)]="income.target" placeholder="Enter target price" type="number" maxlength="10" clearInput></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-input [(ngModel)]="income.quantity" placeholder="Enter quantity" type="number" maxlength="10" clearInput></ion-input>
+        </ion-item>
+    <ion-item>
+      <ion-label>Enter starting day of task</ion-label>
+      <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2018" max="2019" [(ngModel)]="income.date"></ion-datetime>
+    </ion-item>
+          <ion-toolbar>
+            <ion-item>
+              <ion-label>Choose Type</ion-label>
+              <ion-select [(ngModel)]="income.type" interface="action-sheet">
+                  <ion-option value="OneTime">OneTime</ion-option>
+                <ion-option value="Month">Every month</ion-option>
+                <ion-option value="Everyday">Everyday</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-toolbar>
+          <ion-toolbar>
+              <ion-item>
+                <ion-label>Choose Category</ion-label>
+                <ion-select [(ngModel)]="income.category" interface="action-sheet">
+                    <ion-option value="Food">Food</ion-option>
+                  <ion-option value="Rents">Rent</ion-option>
+                  <ion-option value="Trips">Trips</ion-option>
+                  <ion-option value="Sport">Sport</ion-option>
+                  <ion-option value="Hobbies">Hobbies</ion-option>
+                  <ion-option value="Work">Work</ion-option>
+                  <ion-option value="Car">Car</ion-option>
+                </ion-select>
+              </ion-item>
+            </ion-toolbar>
+            <ion-item>
+                <ion-checkbox [(ngModel)]="income.isIncome" color="dark"></ion-checkbox>
+                <ion-label>Income<br></ion-label>
+              </ion-item>
+    <br> <br> <br> <br>
+    <ion-fab left bottom #fab>
+        <button ion-fab color="dark">
+          <ion-icon name="arrow-dropright"></ion-icon>
+        </button>
+        <ion-fab-list side="right">
+          <button ion-fab (click)="goBack(fab);">
+              <ion-icon name="arrow-back"></ion-icon>
+          </button>      
+          <button ion-fab  (click)="goToNext(fab);">
+              <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-fab-list>
+      </ion-fab>
+  </ion-content>

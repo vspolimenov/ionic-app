@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+     Finance Manager
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-toolbar no-border-top >
+    <ion-segment [(ngModel)]="apps">
+      <ion-segment-button value="amount">
+         Statistic
+      </ion-segment-button>
+      <ion-segment-button value="costs">
+        COSTS
+      </ion-segment-button>
+      <ion-segment-button value="incomes">
+        INCOMES
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-item *ngIf="apps == 'amount'">
+    <h1 text-center>Statistic</h1><br>
+    <h1 (click)="showAmount();"><ion-icon name="star" color="bright"></ion-icon> Amout <p *ngIf="isShownAmount">{{amount | number:'1.2-2'}} {{currency}} </p></h1>
+    <br>
+    <h1><ion-icon name="star" color="bright"></ion-icon>Month income: {{lastMonthIncomes}} {{currency}}</h1>
+    <br>
+    <h1><ion-icon name="star" color="bright"></ion-icon>Month costs: {{lastMonthCosts}} {{currency}}</h1>
+    <br> 
+    <h1><ion-icon name="star" color="bright"></ion-icon>Food costs: {{foodSum}}</h1>
+  </ion-item>
+  <h1 text-center *ngIf="apps == 'costs'">Costs</h1>
+  <div *ngFor="let income of incomes"> 
+  <ion-item  *ngIf="apps == 'costs' && !income.isIncome">
+ <h2  (click)="showInfoStateChange(income)"><br><ion-icon (click)="add(income); addCategorySum(income)" name="add-circle"></ion-icon>  <ion-icon (click)="changeIncome(income)" name="build"></ion-icon> {{income.name}} </h2>
+ 
+ <br>
+      <h3 *ngIf="income.showInfo">Price:{{income.value}}/{{income.target}} {{currency}}</h3>
+      <h3 *ngIf="income.showInfo">Category: {{income.category}} </h3>
+      <h3 *ngIf="income.showInfo">Description: {{income.description}} </h3>
+      <h3 *ngIf="income.showInfo">Quantity: {{income.quantity}} </h3>
+     <h3 *ngIf="income.showInfo">Date: {{income.date}} </h3>
+      <br>
+    </ion-item>
+  </div>
+
+  <h1 text-center *ngIf="apps == 'incomes'">Incomes</h1>
+  <div *ngFor="let income of incomes"> 
+  <ion-item  *ngIf="apps == 'incomes' && income.isIncome">
+ <h2  (click)="showInfoStateChange(income)"><br><ion-icon (click)="add(income); addCategorySum(income)" name="add-circle"></ion-icon>  <ion-icon (click)="changeIncome(income)" name="build"></ion-icon> {{income.name}} </h2>
+ 
+ <br>
+      <h3 *ngIf="income.showInfo">Price:{{income.value}}/{{income.target}} {{currency}}</h3>
+      <h3 *ngIf="income.showInfo">Category: {{income.category}} </h3>
+      <h3 *ngIf="income.showInfo">Description: {{income.description}} </h3>
+      <h3 *ngIf="income.showInfo">Quantity: {{income.quantity}} </h3>
+     <h3 *ngIf="income.showInfo">Date: {{income.date}} </h3>
+      <br>
+    </ion-item>
+  </div>
+
+  <ion-fab left bottom #fab>
+    <button ion-fab color="dark">
+      <ion-icon name="arrow-dropright"></ion-icon>
+    </button>
+    <ion-fab-list side="right">
+      <button ion-fab (click)="goToNext(fab);">
+          <ion-icon name="trash"></ion-icon>
+      </button>
+      <button ion-fab (click)="refresh();">
+          <ion-icon name="refresh"></ion-icon>
+      </button>
+      <button ion-fab  (click)="goToProgram(fab);">
+          <ion-icon name="calendar"></ion-icon>
+      </button>
+      <button ion-fab  (click)="goToNewTask(fab);">
+          <ion-icon name="add-circle"></ion-icon>
+      </button>
+      <button ion-fab  (click)="goToTaskManager(fab);">
+          <ion-icon name="pulse"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
+
+<!-- <ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-label>Mute Notifications</ion-label>
+      <ion-select [(ngModel)]="notifications" interface="action-sheet">
+        <ion-option value="mute_15">For 15 Minutes</ion-option>
+        <ion-option value="mute_1">For 1 Hour</ion-option>
+        <ion-option value="mute_23">For 24 Hours</ion-option>
+        <ion-option value="mute_inf">Until I turn it back on</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-toolbar>
+</ion-footer> -->

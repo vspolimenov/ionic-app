@@ -16,8 +16,11 @@
     </ion-item>
     <ion-item>
         <ion-input  [(ngModel)]="wakeupHour"  formControlName="wakeupHour" type="number" placeholder="Wake up at:"></ion-input>
-      </ion-item>
-     
+     </ion-item>
+     <ion-item>
+      <ion-input  [(ngModel)]="amount"  formControlName="amount" type="number" placeholder="Your current amount to start with:"></ion-input>
+   </ion-item>
+  
     <ion-fab left bottom #fab>
         <button ion-fab color="dark">
           <ion-icon name="arrow-dropright"></ion-icon>
@@ -32,4 +35,14 @@
         </ion-fab-list>
       </ion-fab>
     </form>
+    <ion-toolbar>
+        <ion-item>
+          <ion-label>Choose Currency</ion-label>
+          <ion-select [(ngModel)]="currency" interface="action-sheet">
+              <ion-option value="лв">лв.</ion-option>
+            <ion-option value="euro">euro</ion-option>
+            <ion-option value="$">$</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-toolbar>
   </ion-content>

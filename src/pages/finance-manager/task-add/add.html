@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+        Add
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <h1>Add</h1>
+    <br>
+  
+    <h3>Here you can add money spend on choosen product</h3>
+    <br>
+
+    <ion-item>
+        <ion-input [(ngModel)]="valueToAdd" placeholder="Enter money to add dor this product" maxlength="10" clearInput></ion-input>
+      </ion-item>
+    
+    <br>
+    <ion-fab left bottom #fab>
+        <button ion-fab color="dark">
+          <ion-icon name="arrow-dropright"></ion-icon>
+        </button>
+        <ion-fab-list side="right">
+          <button ion-fab (click)="goBack(fab);">
+              <ion-icon name="arrow-back"></ion-icon>
+          </button>      
+          <button ion-fab  (click)="goToNext(fab);">
+              <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </ion-fab-list>
+      </ion-fab>
+  </ion-content>

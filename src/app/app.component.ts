@@ -1,14 +1,15 @@
-import { MainPage } from './../pages/main/main';
+import { MenuPage } from './../pages/menu/menu';
+import { MainPage } from './../pages/task-manager/main/main';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
+import { HomePage } from '../pages/task-manager/home/home';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = MainPage;
+  rootPage:any = MenuPage;
 
   constructor(platform: Platform, splashScreen: SplashScreen) {
     platform.ready().then(() => {

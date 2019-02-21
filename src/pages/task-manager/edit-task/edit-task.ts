@@ -12,7 +12,7 @@ import { NavController, Platform, AlertController, FabContainer } from 'ionic-an
 export class EditTaskPage {
   task:Task;
   taskSeq:number;
-  isFixed:boolean;
+  noReminder:boolean;
   constructor(public navCtrl: NavController,  private storage: Storage,  public localNotifications: LocalNotifications,
     public platform: Platform,
     public alertCtrl: AlertController) {
@@ -28,6 +28,13 @@ export class EditTaskPage {
         this.task.time = task.time;
         this.task.showInfo = task.showInfo;
         this.task.type = task.type;
+        this.task.pinned = task.pinned;
+        this.task.durations = task.durations;
+        this.task.currentDuration = this.task.currentDuration;
+        this.task.startTime = task.startTime;
+        this.task.remaining = task.remaining;
+        this.task.endTime = task.endTime;
+        this.task.isStarted = task.isStarted;
       });
     });
 
@@ -35,7 +42,7 @@ export class EditTaskPage {
 
   deleteTask(fab: FabContainer){
     fab.close();
-this.storage.remove(this.taskSeq + "task");
+    this.storage.remove(this.taskSeq + "task");
     this.navCtrl.push(MainPage); 
   }
  
@@ -43,19 +50,25 @@ this.storage.remove(this.taskSeq + "task");
     fab.close();
     var date = new Date(this.task.date + " " + this.task.time);
   console.log(date);
+  if(!this.noReminder) {
   this.localNotifications.schedule({
      text: this.task.name + ' ' + this.task.description,
      trigger: { at: date},
      led: 'FF0000'
   });
+}
   let alert = this.alertCtrl.create({
     title: 'New Task!',
-    subTitle: 'to' +date,
+    subTitle: 'Created',
     buttons: ['OK']
   });
   alert.present();
+  if(!this.task.isFixed &&  !this.task.time) {
+    this.task.time = "12:00";
+  }
     this.task.isDone = false;
     this.task.taskId = this.taskSeq;
+    console.log("taskche " + this.task.date);
     this.storage.set(this.taskSeq + "task",this.task);
     this.navCtrl.push(MainPage);    
   }

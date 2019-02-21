@@ -12,14 +12,12 @@ import { NavController, Platform, AlertController, FabContainer } from 'ionic-an
 export class NewTaskPage {
   task:Task;
   taskSeq:number;
-  isFixed:boolean;
-
+  noReminder:boolean;
 
   constructor(public navCtrl: NavController,  private storage: Storage,  public localNotifications: LocalNotifications,
     public platform: Platform,
     public alertCtrl: AlertController) {
     this.task = new Task;
-
     this.storage.get('taskSeq').then((val) => {
     
       this.storage.set('taskSeq',val+1);
@@ -27,27 +25,28 @@ export class NewTaskPage {
    });
   }
 
- 
   goToNext(){
- 
   var date = new Date(this.task.date + " " + this.task.time);
   console.log(date);
+  if(!this.noReminder) {
   this.localNotifications.schedule({
      text: this.task.name + ' ' + this.task.description,
      trigger: { at: date},
      led: 'FF0000'
   });
+  }
   let alert = this.alertCtrl.create({
     title: 'New Task!',
-    subTitle: 'to' +date,
+    subTitle: 'Created',
     buttons: ['OK']
   });
   alert.present();
-  if(!this.isFixed) {
+  if(!this.task.isFixed) {
     this.task.time = "12:00";
   }
     this.task.isDone = false;
     this.task.taskId = this.taskSeq;
+    this.task.durations =  [,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,] ;
     this.storage.set(this.taskSeq + "task",this.task);
     
     this.navCtrl.push(MainPage);
