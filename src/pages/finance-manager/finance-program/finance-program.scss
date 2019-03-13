@@ -1,0 +1,23 @@
+.background-content {
+background-color: darkgray;
+}
+
+.content-h1 {
+    width:40%;
+}
+
+.ios, .md {
+
+    page-home {
+
+        .scroll-content {
+            background-color: map-get($colors, light);
+        }
+
+        ion-card-header {
+            font-weight: bold;
+        }
+
+    }
+
+}

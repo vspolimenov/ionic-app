@@ -1,12 +1,14 @@
+import { FinanceProgram } from './../finance-program/finance-program';
 import { EditIncomePage } from './../edit-task/edit-task';
 import { Add } from './../task-add/add';
 import { MainPage } from './../../task-manager/main/main';
 import { MoneyCostOrIncome } from './../money-cost-income';
 import { HomePage } from './../../task-manager/home/home';
 import { FabContainer, NavController } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { NewMoneyCostOrIncomePage } from '../new-task/new-money-cost-income';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'page-main-finance',
@@ -22,6 +24,7 @@ export class MainFinancePage {
   public apps: String;
   isShownAmount:boolean;
   foodSum:number;
+  
   ngOnInit() {
     this.apps = "amount";
   }
@@ -29,7 +32,11 @@ export class MainFinancePage {
     this.lastMonthCosts = 0;
     this.lastMonthIncomes = 0;
     this.isShownAmount = false;
- 
+   this.calculateAmout();
+  }
+
+  calculateAmout() {
+
     this.storage.get('currency').then((val) => {
       
       this.currency = val;    
@@ -62,9 +69,10 @@ export class MainFinancePage {
          new Date(income.date).getDate() == new Date().getDate())) {
           this.incomes.push(income);
           this.incomesLength++;
+
          } });
          val -= 1;
-      }
+      } 
     });
   }
     add(income:MoneyCostOrIncome) {
@@ -86,6 +94,11 @@ export class MainFinancePage {
   goToNewTask(fab?: FabContainer){
     fab.close();
     this.navCtrl.push(NewMoneyCostOrIncomePage);
+  }
+
+  goToProgram(fab?: FabContainer){
+    fab.close();
+    this.navCtrl.push(FinanceProgram);
   }
   goToTaskManager(fab?: FabContainer){
     fab.close();

@@ -37,6 +37,7 @@ export class EditTaskPage {
         this.task.remaining = task.remaining;
         this.task.endTime = task.endTime;
         this.task.isStarted = task.isStarted;
+        this.task.todayTime = task.todayTime;
       });
     });
 

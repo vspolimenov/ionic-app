@@ -36,6 +36,11 @@ export class Program {
           while (val != 0) {
             this.storage.get(val - 1 + "task").then((task: Task) => {
               if (task) {
+                
+                console.log(task);
+                if(!this.isToday()) {
+                  task.todayTime = null;
+                }
                 if (task.date == this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd')) {
                   this.tasks.push(task);
                 }
@@ -81,6 +86,10 @@ export class Program {
     this.todaysDate = new Date(this.todaysDate);
     this.todaysDate.setDate(this.todaysDate.getDate() + 1);
     this.setProgram();
+   
+  }
+  isToday():boolean {
+    return this.datePipe.transform(this.todaysDate, 'yyyy-MM-dd')  == this.datePipe.transform(new Date(), 'yyyy-MM-dd');;
   }
   previousDay(){
     this.todaysDate = new Date(this.todaysDate);

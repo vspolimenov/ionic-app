@@ -97,7 +97,7 @@ export class MainPage {
   calculateRemainig(task:Task) {
     this.todaysDate = new Date();
     if (task.type == "Everyday") {
-      var date = new Date(this.todaysDate);
+      var date = new Date(this.todaysDate + task.time) ;
       this.localNotifications.schedule({
         text: task.name,
         trigger: { at: date },
@@ -105,20 +105,21 @@ export class MainPage {
       });
      task.date = this.todaysDate.toDateString();
     } else if (task.type == "Weekly" || task.type == "Weekend") {
+      if(this.datePipe.transform(task.date , 'yyyy-MM-dd')  != this.datePipe.transform(new Date(), 'yyyy-MM-dd')){
       console.log("kur "+ task.date + (this.todaysDate.getDay() - new Date(task.date).getDay()));
       if(this.todaysDate.getDay() - new Date(task.date).getDay() > 0){
    // var date = new Date(this.todaysDate.setDate(this.todaysDate.getDate()  + 1 +(new Date(task.date).getDay() -this.todaysDate.getDay())));
       var day = this.todaysDate.setDate(this.todaysDate.getDate()  + 1 + (new Date(task.date).getDay() -this.todaysDate.getDay()));;
       this.localNotifications.schedule({
         text: task.name,
-        trigger: { at: new Date(day) },
+        trigger: { at: new Date(day  + task.time) },
         led: 'FF0000'
       });
       
     }
       task.date = new Date(day).toDateString();
     }
-    console.log("pute" + this.todaysDate.getMonth()  + " " +  new Date(task.date).getMonth());
+  }
     if(this.todaysDate.getDate() - new Date(task.date).getDate() == 0){
       if(this.todaysDate.getHours() - new Date(task.date + " " + task.time).getHours() < -1){
         task.remaining = "in " + ( new Date(task.date + " " + task.time).getHours() -this.todaysDate.getHours() - 1) + "h";
@@ -147,6 +148,7 @@ export class MainPage {
   }
   startTask(task:Task) {
     task.startTime=new Date().getTime();
+    task.todayTime = new Date().toTimeString();
     task.isStarted = true;
     task.currentDuration = "0";
     task.durations[new Date().getDay()] = task.currentDuration;
@@ -190,7 +192,9 @@ export class MainPage {
  goToNewTask(fab?: FabContainer){
     fab.close();
     this.navCtrl.push(NewTaskPage);
+      
   }
+
   goToNext(fab?: FabContainer){
     fab.close();
     let alert = this.alertCtrl.create({

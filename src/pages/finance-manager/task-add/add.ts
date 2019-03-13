@@ -31,9 +31,15 @@ export class Add {
       this.storage.set(this.incomeSeq + "income", this.income);
       this.storage.get('amount').then((val) => {
         if (this.income.isIncome) {
-          this.storage.set('amount', val + this.income.value);
+          this.storage.set('amount', +val + +this.valueToAdd);
+          this.storage.get('lastMonthIncomes').then((value) => {
+            this.storage.set('lastMonthIncomes', +value + +this.valueToAdd);
+          });
         } else {
-          this.storage.set('amount', val - this.income.value);
+          this.storage.set('amount', +val - +this.valueToAdd);
+          this.storage.get('lastMonthCosts').then((value) => {
+            this.storage.set('lastMonthCosts', +value + +this.valueToAdd);
+          });
         }
         this.amount = val;
       });
@@ -55,18 +61,15 @@ export class Add {
             this.storage.set(this.incomeSeq + "income", this.income);
             this.storage.get('amount').then((val) => {
               if (this.income.isIncome) {
-                this.storage.set('amount', val + this.valueToAdd);
+                this.storage.set('amount', +val + +this.valueToAdd);
+                this.storage.get('lastMonthIncomes').then((value) => {
+                  this.storage.set('lastMonthIncomes', +value + +this.valueToAdd);
+                });
               } else {
-                this.storage.set('amount', val - this.valueToAdd);
-              }
-              this.amount = val;
-            });
-            this.storage.set(this.incomeSeq + "income", this.income);
-            this.storage.get('amount').then((val) => {
-              if (this.income.isIncome) {
-                this.storage.set('amount', val + this.valueToAdd);
-              } else {
-                this.storage.set('amount', val - this.valueToAdd);
+                this.storage.set('amount', +val - +this.valueToAdd);
+                this.storage.get('lastMonthCosts').then((value) => {
+                  this.storage.set('lastMonthCosts', +value + +this.valueToAdd);
+                });
               }
               this.amount = val;
             });

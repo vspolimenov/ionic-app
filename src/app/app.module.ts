@@ -1,3 +1,4 @@
+import { FinanceProgram } from './../pages/finance-manager/finance-program/finance-program';
 import { EditIncomePage } from './../pages/finance-manager/edit-task/edit-task';
 import { Add } from './../pages/finance-manager/task-add/add';
 import { NewMoneyCostOrIncomePage } from './../pages/finance-manager/new-task/new-money-cost-income';
@@ -35,7 +36,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
     MainFinancePage,
     NewMoneyCostOrIncomePage,
     Add,
-    EditIncomePage
+    EditIncomePage,
+    FinanceProgram
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
      MainFinancePage,
      NewMoneyCostOrIncomePage,
      Add,
-     EditIncomePage
+     EditIncomePage,
+     FinanceProgram
   ],
   providers: [
     SplashScreen,
