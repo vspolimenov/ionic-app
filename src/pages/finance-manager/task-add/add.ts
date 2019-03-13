@@ -57,18 +57,18 @@ export class Add {
         {
           text: 'Yes',
           handler: () => {
-            this.income.value += +this.valueToAdd;
+            this.income.value += +this.valueToAdd *  this.income.quantity;
             this.storage.set(this.incomeSeq + "income", this.income);
             this.storage.get('amount').then((val) => {
               if (this.income.isIncome) {
-                this.storage.set('amount', +val + +this.valueToAdd);
+                this.storage.set('amount', +val + +this.valueToAdd *  this.income.quantity);
                 this.storage.get('lastMonthIncomes').then((value) => {
-                  this.storage.set('lastMonthIncomes', +value + +this.valueToAdd);
+                  this.storage.set('lastMonthIncomes', +value + +this.valueToAdd *  this.income.quantity);
                 });
               } else {
-                this.storage.set('amount', +val - +this.valueToAdd);
+                this.storage.set('amount', +val - +this.valueToAdd *  this.income.quantity);
                 this.storage.get('lastMonthCosts').then((value) => {
-                  this.storage.set('lastMonthCosts', +value + +this.valueToAdd);
+                  this.storage.set('lastMonthCosts', +value + +this.valueToAdd *  this.income.quantity);
                 });
               }
               this.amount = val;

@@ -20,6 +20,7 @@ import { NewTaskPage } from '../new-task/new-task';
 export class MainPage {
   remainigToSleepHours:string;
   sleepHour: number;
+  showTop:boolean;
   wakeupHour:number;
   todaysDate:Date;
   name: String;
@@ -40,14 +41,15 @@ export class MainPage {
   ngOnInit() {
     this.storage.get('sleepHour').then((val) => {
       this.storage.get('wakeupHour').then((wakeup) => {
-
-
-      if(wakeup > new Date().getHours() ) {
+        this.showTop = true;
+        console.log(wakeup);
+        console.log(+wakeup.substr(0,2));
+      if(+wakeup.substr(0,2) > new Date().getHours() ) {
         this.todaysDate = new Date(this.todaysDate);
         this.todaysDate.setDate(this.todaysDate.getDate() - 1);
         this.timeInSeconds = -1;
       } else {
-              this.timeInSeconds = Math.abs((new Date().getHours() - val)) * 60 * 60;
+              this.timeInSeconds = Math.abs((new Date().getHours() - +val.substr(0,2))) * 60 * 60;
       }
       this.initTimer();
       this.startTimer();
@@ -56,6 +58,8 @@ export class MainPage {
     });
 
   }
+
+
   constructor(private backgroundMode: BackgroundMode,
      public navCtrl: NavController,
      public localNotifications: LocalNotifications,
@@ -63,9 +67,7 @@ export class MainPage {
         private storage: Storage,
         public services:Services,
         public alertCtrl: AlertController) {
-    let sleepHour: number;
-    
-    this.apps = 'top';
+    this.showTop = true;
     this.backgroundMode.enable();
     this.storage.get('name').then((val) => {
       if(!val) {
@@ -74,52 +76,76 @@ export class MainPage {
       this.name = val;
       }
     });
-  
-    this.storage.get('taskSeq').then((val: number) => {
-      this.tasksLength = 0;
-      while (val > 0) {
-        this.storage.get(val - 1 + "task").then((task) => {
-          this.todaysDate = new Date();
-          if(task){
-          if(task.pinned && new Date(task.date).getDate() &&   this.todaysDate.getDate() - new Date(task.date).getDate() == 0 || task.taskId < 3) {
-            this.calculateRemainig(task);
-            this.pinnedTasks.push(task);
-          }
-          this.tasks.push(task);
-          this.tasksLength++;
-         } });
-        val -= 1;
-      }
-    });
+   this.generateTasks();
   }
+  changeTODO() {
+    if(this.apps != 'notdone') {
+      this.apps = 'notdone';
+    } else {
+      this.apps ='top';
+    }
+  console.log(this.apps);
+}
+  changeAll() {
+      if(this.apps != 'all') {
+        this.apps = 'all';
+      } else {
+        this.apps ='top';
+      }
+    console.log(this.apps);
+  }
+ public generateTasks(){
+  
+ 
 
+  this.storage.get('taskSeq').then((val: number) => {
+    this.tasksLength = 0;
+    while (val > 0) {
+      this.storage.get(val - 1 + "task").then((task) => {
+        this.todaysDate = new Date();
+        if(task){
 
+          if (task.type == "Everyday" && new Date( task.date) <= this.todaysDate) {
+            var date = new Date(this.todaysDate + task.time) ;
+            this.localNotifications.schedule({
+              text: task.name,
+              trigger: { at: date },
+              led: 'FF0000'
+            });
+           task.date = this.todaysDate.toDateString();
+      
+          } else if (task.type == "Weekly" || task.type == "Weekend" && new Date( task.date) <= this.todaysDate) {
+            if(this.datePipe.transform(task.date , 'yyyy-MM-dd')  != this.datePipe.transform(new Date(), 'yyyy-MM-dd')){
+            console.log("kur "+ task.date + (this.todaysDate.getDay() - new Date(task.date).getDay()));
+            if(this.todaysDate.getDay() - new Date(task.date).getDay() > 0){
+         // var date = new Date(this.todaysDate.setDate(this.todaysDate.getDate()  + 1 +(new Date(task.date).getDay() -this.todaysDate.getDay())));
+            var day = this.todaysDate.setDate(this.todaysDate.getDate()  + 1 + (new Date(task.date).getDay() -this.todaysDate.getDay()));;
+            this.localNotifications.schedule({
+              text: task.name,
+              trigger: { at: new Date(day  + task.time) },
+              led: 'FF0000'
+            });
+            
+          }
+            task.date = new Date(day).toDateString();
+          }
+        }
+
+        if(task.pinned && new Date(task.date).getDate() &&   this.todaysDate.getDate() - new Date(task.date).getDate() == 0 || task.taskId < 3) {
+          this.calculateRemainig(task);
+          this.pinnedTasks.push(task);
+          
+        }
+        this.tasks.push(task);
+        this.tasksLength++;
+       } });
+      val -= 1;
+    }
+  });
+}
   calculateRemainig(task:Task) {
     this.todaysDate = new Date();
-    if (task.type == "Everyday") {
-      var date = new Date(this.todaysDate + task.time) ;
-      this.localNotifications.schedule({
-        text: task.name,
-        trigger: { at: date },
-        led: 'FF0000'
-      });
-     task.date = this.todaysDate.toDateString();
-    } else if (task.type == "Weekly" || task.type == "Weekend") {
-      if(this.datePipe.transform(task.date , 'yyyy-MM-dd')  != this.datePipe.transform(new Date(), 'yyyy-MM-dd')){
-      console.log("kur "+ task.date + (this.todaysDate.getDay() - new Date(task.date).getDay()));
-      if(this.todaysDate.getDay() - new Date(task.date).getDay() > 0){
-   // var date = new Date(this.todaysDate.setDate(this.todaysDate.getDate()  + 1 +(new Date(task.date).getDay() -this.todaysDate.getDay())));
-      var day = this.todaysDate.setDate(this.todaysDate.getDate()  + 1 + (new Date(task.date).getDay() -this.todaysDate.getDay()));;
-      this.localNotifications.schedule({
-        text: task.name,
-        trigger: { at: new Date(day  + task.time) },
-        led: 'FF0000'
-      });
-      
-    }
-      task.date = new Date(day).toDateString();
-    }
-  }
+ 
     if(this.todaysDate.getDate() - new Date(task.date).getDate() == 0){
       if(this.todaysDate.getHours() - new Date(task.date + " " + task.time).getHours() < -1){
         task.remaining = "in " + ( new Date(task.date + " " + task.time).getHours() -this.todaysDate.getHours() - 1) + "h";
@@ -147,8 +173,8 @@ export class MainPage {
     }
   }
   startTask(task:Task) {
-    task.startTime=new Date().getTime();
-    task.todayTime = new Date().toTimeString();
+    task.startTime= new Date().getTime();
+    task.todayTime =  this.datePipe.transform(new Date(), 'HH:mm');
     task.isStarted = true;
     task.currentDuration = "0";
     task.durations[new Date().getDay()] = task.currentDuration;
@@ -185,9 +211,9 @@ export class MainPage {
       task.showInfo = true;
     }
   }
-  goToAbout(fab?: FabContainer){
-    fab.close();
-    this.apps = "all";
+  goToAbout(){
+    console.log( this.apps);
+    this.apps = "top";
   }
  goToNewTask(fab?: FabContainer){
     fab.close();

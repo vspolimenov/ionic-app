@@ -28,10 +28,10 @@ export class Program {
   };
   setProgram() {
     this.tasks = new Array<Task>();
-    this.storage.get('sleepHour').then((val: number) => {
-      this.sleepHour = +val;
+    this.storage.get('sleepHour').then((val) => {
+      this.sleepHour = +val.substr(0,2);
       this.storage.get('wakeupHour').then((val) => {
-        this.wakeupHour = +val;
+        this.wakeupHour = +val.substr(0,2);
         this.storage.get('taskSeq').then((val: number) => {
           while (val != 0) {
             this.storage.get(val - 1 + "task").then((task: Task) => {

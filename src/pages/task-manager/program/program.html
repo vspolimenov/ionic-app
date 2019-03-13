@@ -23,7 +23,7 @@
            <p *ngIf="!task.isDone" (click)="showInfoStateChange(task)"> <ion-icon name="star" color="bright"></ion-icon> {{task.name}}  <br></p> 
            
            <p *ngIf="task.showInfo && !task.todayTime">Time: {{task.time}} </p> 
-           <p *ngIf="task.showInfo && task.todayTime">Time todayTime: {{task.todayTime}} </p> 
+           <p *ngIf="task.showInfo && task.todayTime">Time today start time: {{task.todayTime}} </p> 
            <p *ngIf="task.showInfo"> {{task.description}} </p> 
            <p *ngIf="task.showInfo && task.currentDuration"> Duration: {{task.currentDuration}} </p> 
           

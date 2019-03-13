@@ -13,19 +13,16 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'more.html'
 })
 export class MorePage {
-  public todo: FormGroup;
   taskSeq: number;
   currency:string;
+  sleepHour:string;
+  wakeupHour:string;
+  amount:number;
   constructor(public navCtrl: NavController,
     private storage: Storage,
     private datePipe: DatePipe,
     public localNotifications: LocalNotifications,
     private formBuilder: FormBuilder) {
-      this.todo = this.formBuilder.group({
-        sleepHour: ['', Validators.required],
-        wakeupHour: ['', Validators.required],
-        amount:['', Validators.required]
-        });
   }
   public createTask(name: string, hour: string) {
     let task = new Task();
@@ -53,32 +50,20 @@ export class MorePage {
   };
   goToNext() {
     this.taskSeq = 0;
-   // console.log(this.wakeupHour);
-    if (this.todo.get('wakeupHour').value < 10) {
-      this.createTask("Morning teeth brush", this.todo.get('wakeupHour').value + ":00");
-      this.taskSeq = 1;
-      this.createTask("Morning 15 min meditation", this.todo.get('wakeupHour').value + ":00");
-      this.taskSeq = 2;
-
-      } else {
-        this.createTask("Morning teeth brush", this.todo.get('wakeupHour').value + ":00");
+ 
+        this.createTask("Morning teeth brush", this.wakeupHour);
         this.taskSeq = 1;
-        this.createTask("Morning 15 min meditation", this.todo.get('wakeupHour').value + ":00");
+        this.createTask("Morning 15 min meditation", this.wakeupHour);
         this.taskSeq = 2;
 
-    }
-    console.log(this.todo.get('sleepHour').value);
-    if (this.todo.get('sleepHour').value < 10) {
-      this.createTask("Night teeth brush", this.todo.get('sleepHour').value + ":00");
-    } else {
-      this.createTask("Night teeth brush", this.todo.get('sleepHour').value + ":00");
-    }
+      this.createTask("Night teeth brush", this.sleepHour);
+ 
     this.taskSeq = 3;
     this.storage.set('taskSeq', 3);
 
-    this.storage.set('sleepHour', this.todo.get('sleepHour').value);
-    this.storage.set('wakeupHour', this.todo.get('wakeupHour').value);
-    this.storage.set('amount', this.todo.get('amount').value);
+    this.storage.set('sleepHour', this.sleepHour);
+    this.storage.set('wakeupHour', this.wakeupHour);
+    this.storage.set('amount', this.amount);
     this.navCtrl.push(MenuPage);
     this.storage.set('incomeSeq', 0);
     this.storage.set('currency', this.currency);
