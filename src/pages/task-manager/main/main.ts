@@ -247,7 +247,7 @@ export class MainPage {
 
   }
   refresh() {
-    location.reload();
+    this.navCtrl.push(MenuPage);
 
   }
 

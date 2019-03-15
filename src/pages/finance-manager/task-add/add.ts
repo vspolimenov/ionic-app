@@ -1,3 +1,5 @@
+import { MainPage } from './../../task-manager/main/main';
+import { MenuPage } from './../../menu/menu';
 import { MainFinancePage } from './../main/main-finance';
 import { MoneyCostOrIncome } from './../money-cost-income';
 import { LocalNotifications } from '@ionic-native/local-notifications';
@@ -30,20 +32,24 @@ export class Add {
       this.income.value += +this.valueToAdd;
       this.storage.set(this.incomeSeq + "income", this.income);
       this.storage.get('amount').then((val) => {
+
+        this.storage.get('lastMonthIncomes').then((income) => {
+
+          this.storage.get('lastMonthCosts').then((cost) => {
         if (this.income.isIncome) {
+          console.log( +income + +this.valueToAdd);
           this.storage.set('amount', +val + +this.valueToAdd);
-          this.storage.get('lastMonthIncomes').then((value) => {
-            this.storage.set('lastMonthIncomes', +value + +this.valueToAdd);
-          });
+            this.storage.set('lastMonthIncomes', +income + +this.valueToAdd);
+     
         } else {
           this.storage.set('amount', +val - +this.valueToAdd);
-          this.storage.get('lastMonthCosts').then((value) => {
-            this.storage.set('lastMonthCosts', +value + +this.valueToAdd);
-          });
+            this.storage.set('lastMonthCosts', +cost + +this.valueToAdd);
+  
         }
         this.amount = val;
       });
-      this.navCtrl.push(MainFinancePage);
+    });
+  });
     } else {
       let alert = this.alertCtrl.create({
         title: 'This sum is more than expected to this item',
@@ -73,11 +79,13 @@ export class Add {
               }
               this.amount = val;
             });
-            this.navCtrl.pop();
+            this.navCtrl.push(MenuPage);
           }
         }
         ]
       });
+
+      this.navCtrl.push(MenuPage);
       alert.present();
     }
 

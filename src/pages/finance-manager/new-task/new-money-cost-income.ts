@@ -40,6 +40,8 @@ export class NewMoneyCostOrIncomePage {
   }
   if(!this.income.isIncome) {
     this.income.isIncome = false;
+  }else {
+    this.income.isIncome = true;
   }
  // alert.present();
   this.income.value=0;

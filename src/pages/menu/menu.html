@@ -6,17 +6,31 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
- <br>
- <h1>Hi, {{name}}</h1>
- <button ion-button (click)="goToMainPage()" color="dark">Task Manager</button>
- <button ion-button (click)="goToFinance()" color="dark">Finance Manager</button>
-
+<ion-content padding class="drop">
+  <br>
+  <h1>Hi, {{name}}</h1>
   <ion-row>
-  <ion-col align-self: center>
-  <ion-img width="300" height="170" src="../../assets/imgs/time_manage_c2016-04-01-03-03-06pm.jpg"></ion-img>
-</ion-col>
-</ion-row>
-<h3> When you organize, life is easier and succes is just a matter of time!</h3>
+    <ion-col align-self: center>
+      <ion-img class="rounded" width="300" height="170" src="../../assets/imgs/time_manage_c2016-04-01-03-03-06pm.jpg"></ion-img>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col align-self: center>
+      <button ion-button (click)="goToMainPage()" color="dark">Task Manager</button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col align-self: center>
+      <ion-img class="rounded" width="300" height="170" src="../../assets/imgs/agenda-analysis-business-990818.jpg"></ion-img>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col align-self: center>
+      <button ion-button (click)="goToFinance()" color="dark">Finance Manager</button>
+    </ion-col>
+  </ion-row>
+  <br>
+  <br>
+  <h3> When you organize, life is easier and succes is just a matter of time!</h3>
   <br>
 </ion-content>

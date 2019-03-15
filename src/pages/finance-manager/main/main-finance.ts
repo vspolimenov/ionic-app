@@ -1,3 +1,4 @@
+import { MenuPage } from './../../menu/menu';
 import { FinanceProgram } from './../finance-program/finance-program';
 import { EditIncomePage } from './../edit-task/edit-task';
 import { Add } from './../task-add/add';
@@ -25,6 +26,9 @@ export class MainFinancePage {
   isShownAmount:boolean;
   foodSum:number;
   
+  @ViewChild('barCanvas') barCanvas;
+
+  barChart: any;
   ngOnInit() {
     this.apps = "amount";
   }
@@ -33,6 +37,23 @@ export class MainFinancePage {
     this.lastMonthIncomes = 0;
     this.isShownAmount = false;
    this.calculateAmout();
+  }
+
+  changeCosts() {
+    if(this.apps != 'costs') {
+      this.apps = 'costs';
+    } else {
+      this.apps ='amount';
+    }
+  console.log(this.apps);
+}
+  changeIncomes() {
+      if(this.apps != 'incomes') {
+        this.apps = 'incomes';
+      } else {
+        this.apps ='amount';
+      }
+    console.log(this.apps);
   }
 
   calculateAmout() {
@@ -57,8 +78,9 @@ export class MainFinancePage {
           if(income && new Date(income.date).toDateString() == new Date().toDateString()){
 
             if(income.isIncome && new Date(income.date).getMonth() == new Date().getMonth()) {
+              console.log("pateto ranpi")
               this.lastMonthIncomes += +income.value;
-            } else if (!income.isIncome && new Date(income.date).getMonth() == new Date().getMonth()){
+            } else if (!income.isIncome ){
               this.lastMonthCosts += +income.value;
             }
           this.incomes.push(income);
@@ -105,7 +127,7 @@ export class MainFinancePage {
     this.navCtrl.push(MainPage);
   }
   refresh() {
-    location.reload();
+    this.navCtrl.push(MenuPage);
 
   }
   showAmount(){
@@ -134,4 +156,58 @@ export class MainFinancePage {
   }
   public changeState(task: MoneyCostOrIncome) {
   }
+
+  ionViewDidLoad() {
+
+    this.storage.get('amount').then((amount) => {
+       this.storage.get('lastMonthIncomes').then((incomes) => {
+         this.lastMonthIncomes = incomes;
+         this.storage.get('lastMonthCosts').then((costs) => {
+           this.lastMonthCosts = costs;
+            this.amount = amount;  
+     console.log(costs);  
+ 
+ 
+     this.barChart = new Chart(this.barCanvas.nativeElement, {
+ 
+         type: 'bar',
+         data: {
+             labels: ["Amount", "Month Incomes", "Month Costs"],
+             datasets: [{
+                 label: 'лв',
+                 data: [this.amount, this.lastMonthIncomes,this.lastMonthCosts],
+                 backgroundColor: [
+                     'rgba(255, 99, 132, 0.2)',
+                     'rgba(54, 162, 235, 0.2)',
+                     'rgba(255, 206, 86, 0.2)',
+                     'rgba(75, 192, 192, 0.2)',
+                     'rgba(153, 102, 255, 0.2)',
+                     'rgba(255, 159, 64, 0.2)'
+                 ],
+                 borderColor: [
+                     'rgba(255,99,132,1)',
+                     'rgba(54, 162, 235, 1)',
+                     'rgba(255, 206, 86, 1)',
+                     'rgba(75, 192, 192, 1)',
+                     'rgba(153, 102, 255, 1)',
+                     'rgba(255, 159, 64, 1)'
+                 ],
+                 borderWidth: 1
+             }]
+         },
+         options: {
+             scales: {
+                 yAxes: [{
+                     ticks: {
+                         beginAtZero:true
+                     }
+                 }]
+             }
+         }
+ 
+     });
+   });
+ });
+   });
+ }
 }

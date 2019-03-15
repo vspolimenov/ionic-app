@@ -7,8 +7,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-toolbar no-border-top>
-    <ion-segment >
+    <ion-segment no-border-top class="drop rounded">
       <ion-segment-button (click)="changeTODO()">
         TO DO
       </ion-segment-button>
@@ -16,7 +15,6 @@
         All Tasks
       </ion-segment-button>
     </ion-segment>
-  </ion-toolbar>
 
   <br>
   <div *ngFor="let task of tasks">
@@ -39,7 +37,7 @@
     <h1 text-center>All Tasks</h1>
     <br>
     <div *ngFor="let task of tasks">
-      <ion-item (click)="changeTask(task)" class="background-component" style="margin:10px;" >
+      <ion-item (click)="changeTask(task)" style="margin:10px;" >
         {{task.name}}
       </ion-item>
     </div>
@@ -47,50 +45,52 @@
   <br> 
   <br>
   <br>
+  <div class="transperant-background">
   <ion-item *ngIf="showTop" >
     <h1 text-center>My Day</h1>
     <br>
-    <ion-item>
-      <h2>
+    <ion-item class="drop">
+      <h2 class="h2-bg">
         <ion-icon name="star" color="bright"></ion-icon> You have {{displayTime}} to bed!</h2>
     </ion-item>
     <br>
-    <ion-item>
-      <h2>
+    <ion-item class="drop">
+      <h2 class="h2-bg">
         <ion-icon name="star" color="bright"></ion-icon> Activities: {{tasksLength}}</h2>
     </ion-item>
     <br>
     <br>
     <br>
     <br>
-    <h1 text-center>Pinned Tasks For Today:</h1>
-    <div *ngFor="let task of pinnedTasks">
+    <h1 text-center class="h2-bg">Pinned Tasks For Today:</h1>
+    <div *ngFor="let task of pinnedTasks" >
       <br>
-      <h2 (click)="showInfoStateChange(task)">
-        <ion-icon name="star" color="bright"></ion-icon> {{task.name}} {{task.remaining}} </h2>
-      <h3 *ngIf="!task.isStarted && task.showInfo">
-        <ion-item>
-          <ion-checkbox mode="ios" (click)="startTask(task)" color="dark"></ion-checkbox>
-          <ion-label style="padding:10px">Start Task
+      <h2  (click)="showInfoStateChange(task)"  class="drop h2-bg"> <br>
+        <ion-icon name="star" color="bright"></ion-icon> {{task.name}} {{task.remaining}}   
+        <br> <br> </h2>
+      <h3   *ngIf="!task.isStarted && task.showInfo" >
+        <ion-item class="text">
+         
+          <ion-label (click)="startTask(task)"  >Start Task
             <br>
           </ion-label>
         </ion-item>
       </h3>
-      <h3 *ngIf="task.isStarted && task.showInfo">
-        <ion-item>
-          <ion-checkbox (click)="stopTask(task)" color="dark"></ion-checkbox>
-          <ion-label>Stop Task
+      <h3 class="h2-bg" *ngIf="task.isStarted && task.showInfo" class="text">
+        <ion-item class="text">
+          <ion-label  (click)="stopTask(task)" >Stop Task
             <br>
           </ion-label>
         </ion-item>
+        
       </h3>
-      <h3 *ngIf="task.currentDuration != '0' && task.showInfo">
+      <h3 class="h2-bg" *ngIf="task.currentDuration != '0' && task.showInfo" class="text">
         {{task.currentDuration }}
       </h3>
     </div>
   </ion-item>
   <br>
-  
+</div>
   <br>
   <br>
 <br>
@@ -103,16 +103,13 @@
         <ion-icon name="trash"></ion-icon>
       </button>
       <button ion-fab (click)="refresh();">
-        <ion-icon name="refresh"></ion-icon>
+          <ion-icon name="menu"></ion-icon>
       </button>
       <button ion-fab (click)="goToProgram(fab);">
         <ion-icon name="calendar"></ion-icon>
       </button>
       <button ion-fab (click)="goToNewTask(fab,tasks);">
         <ion-icon name="add-circle"></ion-icon>
-      </button>
-      <button ion-fab (click)="goToFinance(fab);">
-        <ion-icon name="logo-usd"></ion-icon>
       </button>
     </ion-fab-list>
   </ion-fab>

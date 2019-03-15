@@ -5,39 +5,39 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding >
+<ion-content padding class="drop">
     <h1>New Task</h1>
     <br>
   
-    <h3>Here you can add new task for today, tomorow or whenever you want</h3>
+    <h2>Here you can add new task for today, tomorow or whenever you want</h2>
     <br>
     <ion-item >
       <ion-input  [(ngModel)]="task.name" placeholder="Enter short name for the task" clearInput></ion-input>
-    </ion-item>
+    </ion-item>    <br>  <br>
     <ion-item>
       <ion-input [(ngModel)]="task.description" placeholder="Enter description" clearInput></ion-input>
-    </ion-item>
+    </ion-item>    <br>  <br>
     <ion-item>
       <ion-label>Enter starting day of task</ion-label>
       <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2018" max="2019" [(ngModel)]="task.date"></ion-datetime>
-    </ion-item>
+    </ion-item>    <br>  <br>
     <ion-item>
         <ion-checkbox mode="ios" [(ngModel)]="task.isFixed" color="dark"></ion-checkbox>
         <ion-label style="padding:10px"> Is task with fixed hour<br></ion-label>
-      </ion-item>
+      </ion-item>    <br>  <br>
     <ion-item *ngIf="task.isFixed">
         <ion-label>Enter starting hour of task</ion-label>
         <ion-datetime displayFormat="HH:mm" min="2018" max="2050" [(ngModel)]="task.time"></ion-datetime>
     </ion-item>
-
+    <br>  <br>
       <ion-item>
           <ion-checkbox mode="ios" [(ngModel)]="noReminder" color="dark"></ion-checkbox>
           <ion-label style="padding:10px">Stop task reminder<br></ion-label>
-        </ion-item> 
+        </ion-item>     <br>  <br>
         <ion-item>
             <ion-checkbox mode="ios" [(ngModel)]="task.pinned" color="dark"></ion-checkbox>
             <ion-label style="padding:10px">Pin task<br></ion-label>
-          </ion-item>
+          </ion-item>    <br>  <br>
           <ion-toolbar>
             <ion-item>
               <ion-label>Choose Type</ion-label>

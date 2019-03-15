@@ -6,59 +6,72 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-toolbar no-border-top >
-    <ion-segment [(ngModel)]="apps">
-      <ion-segment-button value="amount">
-         Statistic
-      </ion-segment-button>
-      <ion-segment-button value="costs">
+<ion-content padding >
+    <ion-segment no-border-top class="drop rounded">
+      <ion-segment-button value="costs" (click)="changeCosts()">
         COSTS
       </ion-segment-button>
-      <ion-segment-button value="incomes">
+      <ion-segment-button value="incomes" (click)="changeIncomes()">
         INCOMES
       </ion-segment-button>
     </ion-segment>
-  </ion-toolbar>
-  <ion-item *ngIf="apps == 'amount'">
-    <h1 text-center>Statistic</h1><br>
-    <h1 (click)="showAmount();"><ion-icon name="star" color="bright"></ion-icon> Amout <p *ngIf="isShownAmount">{{amount | number:'1.2-2'}} {{currency}} </p></h1>
-    <br>
-    <h1><ion-icon name="star" color="bright"></ion-icon>Month income: {{lastMonthIncomes}} {{currency}}</h1>
-    <br>
-    <h1><ion-icon name="star" color="bright"></ion-icon>Month costs: {{lastMonthCosts}} {{currency}}</h1>
-    <br> 
-    <h1><ion-icon name="star" color="bright"></ion-icon>Food costs: {{foodSum}}</h1>
-  </ion-item>
-  <h1 text-center *ngIf="apps == 'costs'">Costs</h1>
-  <div *ngFor="let income of incomes"> 
-  <ion-item  *ngIf="apps == 'costs' && !income.isIncome">
- <h2  (click)="showInfoStateChange(income)"><br><ion-icon (click)="add(income); addCategorySum(income)" name="add-circle"></ion-icon>  <ion-icon (click)="changeIncome(income)" name="build"></ion-icon> {{income.name}} </h2>
- 
- <br>
-      <h3 *ngIf="income.showInfo">Price:{{income.value}}/{{income.target}} {{currency}}</h3>
-      <h3 *ngIf="income.showInfo">Category: {{income.category}} </h3>
-      <h3 *ngIf="income.showInfo">Description: {{income.description}} </h3>
-      <h3 *ngIf="income.showInfo">Quantity: {{income.quantity}} </h3>
-     <h3 *ngIf="income.showInfo">Date: {{income.date}} </h3>
-      <br>
-    </ion-item>
-  </div>
 
-  <h1 text-center *ngIf="apps == 'incomes'">Incomes</h1>
-  <div *ngFor="let income of incomes"> 
-  <ion-item  *ngIf="apps == 'incomes' && income.isIncome">
- <h2  (click)="showInfoStateChange(income)"><br><ion-icon (click)="add(income); addCategorySum(income)" name="add-circle"></ion-icon>  <ion-icon (click)="changeIncome(income)" name="build"></ion-icon> {{income.name}} </h2>
- 
- <br>
-      <h3 *ngIf="income.showInfo">Price:{{income.value}}/{{income.target}} {{currency}}</h3>
-      <h3 *ngIf="income.showInfo">Category: {{income.category}} </h3>
-      <h3 *ngIf="income.showInfo">Description: {{income.description}} </h3>
-      <h3 *ngIf="income.showInfo">Quantity: {{income.quantity}} </h3>
-     <h3 *ngIf="income.showInfo">Date: {{income.date}} </h3>
-      <br>
+  <ion-item  *ngIf="apps == 'costs'" class="item-background" >
+      <div *ngFor="let income of incomes"> 
+      <ion-item  *ngIf="apps == 'costs' && income && !income.isIncome" (click)="showInfoStateChange(income)"><br><ion-icon (click)="add(income); addCategorySum(income)" name="add-circle"></ion-icon>  <ion-icon (click)="changeIncome(income)" name="build"></ion-icon> {{income.name}}
+     
+          <h3 *ngIf="income.showInfo">Price:{{income.value}}/{{income.target}} {{currency}}</h3>
+          <h3 *ngIf="income.showInfo">Category: {{income.category}} </h3>
+          <h3 *ngIf="income.showInfo">Description: {{income.description}} </h3>
+          <h3 *ngIf="income.showInfo">Quantity: {{income.quantity}} </h3>
+         <h3 *ngIf="income.showInfo">Date: {{income.date}} </h3>
+          <br>
+        </ion-item>
+      </div>
     </ion-item>
-  </div>
+    <ion-item *ngIf="apps == 'incomes'"  class="item-background">
+  
+      <div *ngFor="let income of incomes"> 
+      <ion-item  *ngIf="apps == 'incomes' && income && income.isIncome" (click)="showInfoStateChange(income)"><br><ion-icon (click)="add(income); addCategorySum(income)" name="add-circle"></ion-icon>  <ion-icon (click)="changeIncome(income)" name="build"></ion-icon> {{income.name}} 
+
+          <h3 *ngIf="income.showInfo">Price:{{income.value}}/{{income.target}} {{currency}}</h3>
+          <h3 *ngIf="income.showInfo">Category: {{income.category}} </h3>
+          <h3 *ngIf="income.showInfo">Description: {{income.description}} </h3>
+          <h3 *ngIf="income.showInfo">Quantity: {{income.quantity}} </h3>
+         <h3 *ngIf="income.showInfo">Date: {{income.date}} </h3>
+          <br>
+        </ion-item>
+      </div>
+    </ion-item>
+    <br>  <br>
+    <div class="transperant-background">
+  <ion-item class="item-background">
+    <h1 class="h2-bg" text-center>Statistic</h1><br>
+    <ion-item class="drop">
+    <h1 class="h2-bg" (click)="showAmount();"><ion-icon name="star" color="bright"></ion-icon> Amout </h1>
+ 
+  </ion-item>
+  <br>
+    <p  *ngIf="isShownAmount" class="text h2-bg">{{amount | number:'1.2-2'}} {{currency}} </p>
+    <br>
+    <ion-item class="drop">
+    <h1 class="h2-bg"><ion-icon name="star" color="bright"></ion-icon>Month income: {{lastMonthIncomes}} {{currency}}</h1>
+  </ion-item>
+    <br>
+    <ion-item class="drop">
+    <h1 class="h2-bg"><ion-icon name="star" color="bright"></ion-icon>Month costs: {{lastMonthCosts}} {{currency}}</h1>
+  </ion-item>
+    <br> 
+  </ion-item>
+</div>
+  <ion-card>
+      <ion-card-header>
+       Money Chart
+      </ion-card-header>
+      <ion-card-content>
+        <canvas #barCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
 
   <ion-fab left bottom #fab>
     <button ion-fab color="dark">
@@ -69,16 +82,10 @@
           <ion-icon name="trash"></ion-icon>
       </button>
       <button ion-fab (click)="refresh();">
-          <ion-icon name="refresh"></ion-icon>
-      </button>
-      <button ion-fab  (click)="goToProgram(fab);">
-          <ion-icon name="calendar"></ion-icon>
+          <ion-icon name="menu"></ion-icon>
       </button>
       <button ion-fab  (click)="goToNewTask(fab);">
           <ion-icon name="add-circle"></ion-icon>
-      </button>
-      <button ion-fab  (click)="goToTaskManager(fab);">
-          <ion-icon name="pulse"></ion-icon>
       </button>
     </ion-fab-list>
   </ion-fab>
