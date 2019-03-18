@@ -8,10 +8,10 @@
 
 <ion-content padding class="drop">
   <br>
-  <h1>Hi, {{name}}</h1>
+ <font size="26" style="color:white;">Hi, {{name}} </font><br>
   <ion-row>
     <ion-col align-self: center>
-      <ion-img class="rounded" width="300" height="170" src="../../assets/imgs/time_manage_c2016-04-01-03-03-06pm.jpg"></ion-img>
+      <ion-img class="rounded" width="300" height="170" (click)="goToMainPage()"  src="../../assets/imgs/time_manage_c2016-04-01-03-03-06pm.jpg"></ion-img>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -21,7 +21,7 @@
   </ion-row>
   <ion-row>
     <ion-col align-self: center>
-      <ion-img class="rounded" width="300" height="170" src="../../assets/imgs/agenda-analysis-business-990818.jpg"></ion-img>
+      <ion-img class="rounded" width="300" height="170" (click)="goToFinance()" src="../../assets/imgs/agenda-analysis-business-990818.jpg"></ion-img>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -31,6 +31,6 @@
   </ion-row>
   <br>
   <br>
-  <h3> When you organize, life is easier and succes is just a matter of time!</h3>
+  <h2> When you organize, <br> life is easier <br> and succes is just a matter of time!</h2>
   <br>
 </ion-content>

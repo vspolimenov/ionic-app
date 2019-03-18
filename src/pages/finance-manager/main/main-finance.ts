@@ -151,7 +151,7 @@ export class MainFinancePage {
   }
 
   changeIncome(income:MoneyCostOrIncome) {
-    this.storage.set('editedTask', income.incomeId);
+    this.storage.set('editedIncome', income.incomeId);
     this.navCtrl.push(EditIncomePage);
   }
   public changeState(task: MoneyCostOrIncome) {

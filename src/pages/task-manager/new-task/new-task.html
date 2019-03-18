@@ -8,7 +8,11 @@
 <ion-content padding class="drop">
     <h1>New Task</h1>
     <br>
-  
+    <ion-fab left top #fab>
+        <button color="dark" ion-fab (click)="goBack(fab);">
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-fab>
     <h2>Here you can add new task for today, tomorow or whenever you want</h2>
     <br>
     <ion-item >
@@ -49,7 +53,7 @@
               </ion-select>
             </ion-item>
           </ion-toolbar>
-    <br>
+    <br><br>  <br><br>  <br>
     <ion-fab left bottom #fab>
         <button ion-fab color="dark">
           <ion-icon name="arrow-dropright"></ion-icon>

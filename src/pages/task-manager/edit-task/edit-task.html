@@ -8,11 +8,17 @@
 <ion-content padding class="drop rounded">
     <h1>Edit Task {{task.name}}</h1>
     <br>
+    <ion-fab left top #fab>
+        <button color="dark" ion-fab (click)="goBack(fab);">
+            <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-fab>
     <h2>Here you can edit your task</h2>
     <br>
     <ion-item>
       <ion-input [(ngModel)]="task.name" placeholder="Enter short name for the task" clearInput></ion-input>
     </ion-item>
+    <br>  <br>
     <ion-item>
         <br>  <br>
       <ion-input [(ngModel)]="task.description" placeholder="Enter description" clearInput></ion-input>
@@ -47,7 +53,7 @@
               </ion-select>
             </ion-item>
           </ion-toolbar>
-    <br>
+    <br><br>  <br><br>  <br>
     <ion-fab left bottom #fab>
         <button ion-fab color="dark">
           <ion-icon name="arrow-dropright"></ion-icon>
@@ -56,12 +62,12 @@
             <button ion-fab   (click)="deleteTask(fab);">
                 <ion-icon name="trash"></ion-icon>
             </button>
-          <button ion-fab (click)="goBack(fab);">
-              <ion-icon name="arrow-back"></ion-icon>
-          </button>      
-          <button ion-fab  (click)="goToNext(fab);">
-              <ion-icon name="arrow-forward"></ion-icon>
-          </button>
+            <button ion-fab (click)="goBack(fab);">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>      
+            <button ion-fab  (click)="goToNext(fab);">
+                <ion-icon name="arrow-forward"></ion-icon>
+            </button>
         </ion-fab-list>
       </ion-fab>
   </ion-content>

@@ -1,3 +1,4 @@
+import { MenuPage } from './../../menu/menu';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Storage } from '@ionic/storage';
 import { Task } from './../main/task';
@@ -46,7 +47,7 @@ export class EditTaskPage {
   deleteTask(fab: FabContainer){
     fab.close();
     this.storage.remove(this.taskSeq + "task");
-    this.navCtrl.push(MainPage); 
+    this.navCtrl.pop();
   }
  
   goToNext(fab: FabContainer){
@@ -70,7 +71,7 @@ export class EditTaskPage {
 }
   let alert = this.alertCtrl.create({
     title: 'New Task!',
-    subTitle: 'Created',
+    subTitle: 'New Task Created',
     buttons: ['OK']
   });
   alert.present();
@@ -81,7 +82,7 @@ export class EditTaskPage {
     this.task.taskId = this.taskSeq;
     console.log("taskche " + this.task.date);
     this.storage.set(this.taskSeq + "task",this.task);
-    this.navCtrl.pop();    
+    this.navCtrl.popToRoot();
   }
   goBack(fab: FabContainer){
     fab.close();

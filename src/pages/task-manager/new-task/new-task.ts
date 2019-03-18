@@ -44,7 +44,7 @@ export class NewTaskPage {
   }
   let alert = this.alertCtrl.create({
     title: 'New Task!',
-    subTitle: 'Created',
+    subTitle: 'New Task Created',
     buttons: ['OK']
   });
   alert.present();
@@ -54,7 +54,7 @@ export class NewTaskPage {
     this.task.taskId = this.taskSeq;
     this.task.durations =  [,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,] ;
     this.storage.set(this.taskSeq + "task",this.task);
-    this.navCtrl.push(MainPage);
+    this.navCtrl.popToRoot();
   
     
   }

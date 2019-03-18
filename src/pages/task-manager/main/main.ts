@@ -247,7 +247,7 @@ export class MainPage {
 
   }
   refresh() {
-    this.navCtrl.push(MenuPage);
+    this.navCtrl.pop();
 
   }
 

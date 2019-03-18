@@ -21,7 +21,7 @@ export class EditIncomePage {
       this.incomeSeq = val;
   
       this.storage.get(val + "income").then((income: MoneyCostOrIncome) => {
-        console.log(income);
+        console.log("ПАРАМПАМПАМ" + val);
         this.income.name = income.name;
         this.income.description = income.description;
         this.income.date = income.date;
