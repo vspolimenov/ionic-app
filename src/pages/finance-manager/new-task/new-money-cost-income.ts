@@ -46,13 +46,13 @@ export class NewMoneyCostOrIncomePage {
  // alert.present();
   this.income.value=0;
     this.storage.set(this.incomeSeq + "income",this.income); 
-    this.navCtrl.push(MainFinancePage);
+    this.navCtrl.popToRoot();
 } else {
  this.error = "You must add name and target price to this income";
 }
   }
   goBack(fab: FabContainer){
     fab.close();
-    this.navCtrl.push(MainFinancePage);    
+    this.navCtrl.pop();  
 	}
 }

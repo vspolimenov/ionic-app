@@ -40,7 +40,7 @@ export class EditIncomePage {
   deleteTask(fab: FabContainer){
     fab.close();
 this.storage.remove(this.incomeSeq + "task");
-    this.navCtrl.push(MainFinancePage); 
+this.navCtrl.popToRoot();
   }
  
   goToNext(fab: FabContainer){
@@ -48,10 +48,10 @@ this.storage.remove(this.incomeSeq + "task");
 
    this.income.incomeId = this.incomeSeq;
     this.storage.set(this.incomeSeq + "income",this.income);
-    this.navCtrl.push(MainFinancePage);    
+    this.navCtrl.popToRoot(); 
   }
   goBack(fab: FabContainer){
     fab.close();
-    this.navCtrl.push(MainFinancePage);    
+    this.navCtrl.pop();  
 	}
 }

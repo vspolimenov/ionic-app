@@ -47,6 +47,7 @@ export class Add {
   
         }
         this.amount = val;
+        this.navCtrl.popToRoot();
       });
     });
   });
@@ -79,19 +80,19 @@ export class Add {
               }
               this.amount = val;
             });
-            this.navCtrl.push(MenuPage);
+            this.navCtrl.popToRoot();
           }
         }
         ]
       });
 
-      this.navCtrl.push(MenuPage);
+      this.navCtrl.popToRoot();
       alert.present();
     }
 
   }
   goBack(fab: FabContainer) {
     fab.close();
-    this.navCtrl.push(MainFinancePage);
+    this.navCtrl.pop();
   }
 }

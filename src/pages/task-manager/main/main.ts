@@ -147,11 +147,12 @@ export class MainPage {
     this.todaysDate = new Date();
  
     if(this.todaysDate.getDate() - new Date(task.date).getDate() == 0){
-      if(this.todaysDate.getHours() - new Date(task.date + " " + task.time).getHours() < -1){
-        task.remaining = "in " + ( new Date(task.date + " " + task.time).getHours() -this.todaysDate.getHours() - 1) + "h";
-        } else if(this.todaysDate.getHours() - new Date(task.date + " " + task.time).getHours()== -1 && this.todaysDate.getMinutes() - new Date(task.date + " " + task.time).getMinutes() > 0){
-        console.log(this.todaysDate.getHours() - new Date(task.date + " " + task.time).getHours());
-        task.remaining ="in " + (60 - this.todaysDate.getMinutes() - new Date(task.date + " " + task.time).getMinutes()) + "min";
+      console.log("kurkapan" + task.name + (this.todaysDate.getHours() - new Date(task.date + " " + task.time).getHours()));
+      if(this.todaysDate.getHours() - new Date(task.date + " " + task.time).getHours() <= -1){
+        task.remaining = "in " + ( new Date(task.date + " " + task.time).getHours() -this.todaysDate.getHours()) + "h";
+        } else if(this.todaysDate.getHours() - new Date(task.date + " " + task.time).getHours()== 0 && this.todaysDate.getMinutes() - new Date(task.date + " " + task.time).getMinutes() <= 0){
+        
+        task.remaining ="in " + (new Date(task.date + " " + task.time).getMinutes() - this.todaysDate.getMinutes()) + "min";
         }else {
       task.isDone = true;
       task.remaining = "PASSED";
