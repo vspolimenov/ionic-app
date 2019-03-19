@@ -19,6 +19,8 @@ export class Task {
     public isFixed:boolean;
     public startTime:number;
     public endTime:number;
+    public income:number;
+    public money:number;
     public isStarted:boolean;
     public todayTime:string;
 }

@@ -32,6 +32,7 @@
            <p *ngIf="task.showInfo && task.todayTime" style="color:black; text-align:center">Time today start time: {{task.todayTime}} </p> 
            <p *ngIf="task.showInfo" style="color:black; text-align:center"> {{task.description}} </p> 
            <p *ngIf="task.showInfo && task.currentDuration" style="color:black; text-align:center"> Duration: {{task.currentDuration}} </p> 
+           <p *ngIf="task.showInfo && task.money" style="color:black; text-align:center"> Money: {{task.money}} {{currency}} </p> 
            <br>
           </div>
           </div> </div>

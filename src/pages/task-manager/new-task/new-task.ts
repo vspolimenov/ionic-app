@@ -51,12 +51,11 @@ export class NewTaskPage {
   console.log("is fixed" + this.task.isFixed);
   
     this.task.isDone = false;
+    this.task.money = 0;
     this.task.taskId = this.taskSeq;
     this.task.durations =  [,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,] ;
     this.storage.set(this.taskSeq + "task",this.task);
     this.navCtrl.popToRoot();
-  
-    
   }
   goBack(fab: FabContainer){
     fab.close();

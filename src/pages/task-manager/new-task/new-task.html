@@ -42,11 +42,15 @@
             <ion-checkbox mode="ios" [(ngModel)]="task.pinned" color="dark"></ion-checkbox>
             <ion-label style="padding:10px">Pin task<br></ion-label>
           </ion-item>    <br>  <br>
+          <ion-item>
+              <ion-label>Enter task income: </ion-label>
+            <ion-input [(ngModel)]="task.income" type="number" ></ion-input>
+          </ion-item>    <br>  <br>
           <ion-toolbar>
             <ion-item>
               <ion-label>Choose Type</ion-label>
               <ion-select [(ngModel)]="task.type" interface="action-sheet">
-                  <ion-option value="OneTime">OneTime</ion-option>
+                <ion-option value="OneTime">OneTime</ion-option>
                 <ion-option value="Weekly">Only in weekdays</ion-option>
                 <ion-option value="Weekend">Only weekends</ion-option>
                 <ion-option value="Everyday">Everyday</ion-option>

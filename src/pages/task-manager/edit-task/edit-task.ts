@@ -33,10 +33,13 @@ export class EditTaskPage {
         this.task.type = task.type;
         this.task.pinned = task.pinned;
         this.task.durations = task.durations;
+        this.task.isFixed = task.isFixed;
         this.task.currentDuration = this.task.currentDuration;
         this.task.startTime = task.startTime;
         this.task.remaining = task.remaining;
         this.task.endTime = task.endTime;
+        this.task.money = task.money;
+        this.task.income = task.income;
         this.task.isStarted = task.isStarted;
         this.task.todayTime = task.todayTime;
       });
@@ -47,7 +50,7 @@ export class EditTaskPage {
   deleteTask(fab: FabContainer){
     fab.close();
     this.storage.remove(this.taskSeq + "task");
-    this.navCtrl.pop();
+    this.navCtrl.popToRoot();
   }
  
   goToNext(fab: FabContainer){
@@ -56,7 +59,7 @@ export class EditTaskPage {
       this.error = true;
       return;
     }
-    if(!this.isFixed) {
+    if(!this.task.isFixed) {
       this.task.time = "12:00";
     }
     fab.close();

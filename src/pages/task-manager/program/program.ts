@@ -15,6 +15,7 @@ export class Program {
   sleepHour: number;
   wakeupHour: number;
   todaysDate: Date;
+  currency:string;
   tasks: Array<Task> = [];
   constructor(public navCtrl: NavController, private storage: Storage, private datePipe: DatePipe,  public localNotifications: LocalNotifications,
     public platform: Platform,
@@ -27,6 +28,11 @@ export class Program {
     alarm: false
   };
   setProgram() {
+
+    this.storage.get('currency').then((val) => {
+      
+      this.currency = val;    
+
     this.tasks = new Array<Task>();
     this.storage.get('sleepHour').then((val) => {
       this.sleepHour = +val.substr(0,2);
@@ -80,7 +86,8 @@ export class Program {
           }
         });
       });
-    });
+    });     
+  });
   }
   nextDay(){
     this.todaysDate = new Date(this.todaysDate);

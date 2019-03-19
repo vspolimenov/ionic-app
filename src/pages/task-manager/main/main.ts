@@ -133,6 +133,7 @@ export class MainPage {
 
         if(task.pinned && new Date(task.date).getDate() &&   this.todaysDate.getDate() - new Date(task.date).getDate() == 0 || task.taskId < 3) {
           this.calculateRemainig(task);
+          task.showInfo = false;
           this.pinnedTasks.push(task);
           
         }
@@ -147,8 +148,8 @@ export class MainPage {
     this.todaysDate = new Date();
  
     if(this.todaysDate.getDate() - new Date(task.date).getDate() == 0){
-      console.log("kurkapan" + task.name + (this.todaysDate.getHours() - new Date(task.date + " " + task.time).getHours()));
-      if(this.todaysDate.getHours() - new Date(task.date + " " + task.time).getHours() <= -1){
+      if(+(new Date(task.date + " " + task.time).getHours() - this.todaysDate.getHours()) > 0){
+        console.log("kurkapan"+ " today "+ (new Date(task.date + " " + task.time).getHours() - this.todaysDate.getHours()));
         task.remaining = "in " + ( new Date(task.date + " " + task.time).getHours() -this.todaysDate.getHours()) + "h";
         } else if(this.todaysDate.getHours() - new Date(task.date + " " + task.time).getHours()== 0 && this.todaysDate.getMinutes() - new Date(task.date + " " + task.time).getMinutes() <= 0){
         
@@ -161,6 +162,7 @@ export class MainPage {
     task.pinned=false;
   }
     if(task.isDone){
+      console.log("done")
       task.remaining = "PASSED";
       this.storage.set(task.taskId + "task",task);
     }
@@ -189,9 +191,27 @@ export class MainPage {
     task.isStarted = false;
     task.currentDuration = this.formatDuration(task.endTime - task.startTime);
     task.durations[new Date().getDay()]  =    task.currentDuration;
+    if(task.income && task.income != 0) {
+      this.storage.get('amount').then((val) => {
+        let hours;
+        if (task.endTime - task.startTime * 2.77777778 * 0.00000001 > 1) {
+      
+          hours =  ((task.endTime - task.startTime )* 2.77777778 * 0.00000001).toFixed(0);
+    
+         } else {
+           hours = 0;
+         }
+         task.money += +task.income * +hours;
+         console.log("monetty" + task.money);
+      this.storage.set("amount",+val +  +task.income * +hours);
+      this.storage.set(task.taskId + "task",task);
+    });
+    } else {
     this.storage.set(task.taskId + "task",task);
+    }
     task.isDone = true;
     task.remaining = "PASSED";
+    
     console.log(new Date().getDay());
   }
 
