@@ -1,3 +1,4 @@
+import { Transactions } from './../transactions/transactions';
 import { MenuPage } from './../../menu/menu';
 import { FinanceProgram } from './../finance-program/finance-program';
 import { EditIncomePage } from './../edit-task/edit-task';
@@ -25,6 +26,7 @@ export class MainFinancePage {
   public apps: String;
   isShownAmount:boolean;
   foodSum:number;
+  transactionSeq:number;
   
   @ViewChild('barCanvas') barCanvas;
 
@@ -57,6 +59,8 @@ export class MainFinancePage {
   }
 
   calculateAmout() {
+
+    this.storage.get('transactionSeq').then((tr: number) => {
 
     this.storage.get('currency').then((val) => {
       
@@ -96,6 +100,7 @@ export class MainFinancePage {
          val -= 1;
       } 
     });
+  });
   }
     add(income:MoneyCostOrIncome) {
       this.storage.set('editedIncome', income.incomeId);
@@ -121,6 +126,10 @@ export class MainFinancePage {
   goToProgram(fab?: FabContainer){
     fab.close();
     this.navCtrl.push(FinanceProgram);
+  }
+  goToTransactions(fab?: FabContainer){
+    fab.close();
+    this.navCtrl.push(Transactions);
   }
   goToTaskManager(fab?: FabContainer){
     fab.close();

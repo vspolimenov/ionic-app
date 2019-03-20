@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+        Daily Program
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="dropp">
+    <br>
+    <ion-fab left top #fab>
+            <button color="dark"ion-fab (click)="goToNext(fab);">
+                    <ion-icon  name="arrow-back"></ion-icon>
+                </button>
+          </ion-fab>
+    
+  <h1 text-center>Transactions <br></h1>
+  <br>
+  <ul >
+      <div *ngFor="let transaction of transactions" class="item-background rounded transperant-background">
+        <h1 style="padding:10px">{{transaction}} </h1>
+      </div>
+    </ul>
+    <br><br><br>  <br>
+    <br>
+</ion-content>

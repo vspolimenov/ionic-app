@@ -23,6 +23,7 @@ export class NewMoneyCostOrIncomePage {
       this.storage.set('incomeSeq',val+1);
       this.incomeSeq = val;
       this.income.incomeId = val;
+      this.income.quantity = 1;
    });
   }
 

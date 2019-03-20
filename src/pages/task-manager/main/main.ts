@@ -96,7 +96,7 @@ export class MainPage {
   }
  public generateTasks(){
   
- 
+  this.storage.get('transactionSeq').then((tr: number) => {
 
   this.storage.get('taskSeq').then((val: number) => {
     this.tasksLength = 0;
@@ -142,7 +142,7 @@ export class MainPage {
        } });
       val -= 1;
     }
-  });
+  });});
 }
   calculateRemainig(task:Task) {
     this.todaysDate = new Date();
@@ -187,6 +187,10 @@ export class MainPage {
   }
 
   stopTask(task:Task) {
+    
+    this.storage.get('currency').then((cur) => { 
+  this.storage.get('transactionSeq').then((tr: number) => {
+
     task.endTime=new Date().getTime();
     task.isStarted = false;
     task.currentDuration = this.formatDuration(task.endTime - task.startTime);
@@ -194,26 +198,27 @@ export class MainPage {
     if(task.income && task.income != 0) {
       this.storage.get('amount').then((val) => {
         let hours;
-        if (task.endTime - task.startTime * 2.77777778 * 0.00000001 > 1) {
-      
-          hours =  ((task.endTime - task.startTime )* 2.77777778 * 0.00000001).toFixed(0);
-    
+        if (task.endTime - task.startTime *  2.77777778 * 0.00000001 > 1) {
+          hours =  ((task.endTime - task.startTime )*  2.77777778 * 0.00000001).toFixed(0);
          } else {
            hours = 0;
          }
+
          task.money += +task.income * +hours;
          console.log("monetty" + task.money);
       this.storage.set("amount",+val +  +task.income * +hours);
       this.storage.set(task.taskId + "task",task);
+      this.storage.set(tr + "transaction", task.name + ": " + task.income * +hours + " "+ cur + ". " + this.datePipe.transform(new Date() , 'yyyy-MM-dd'));
+      this.storage.set('transactionSeq', tr +1);
+     // console.log(task.name + " - " + task.income * +hours + "," +  (+tr) + "transaction");
     });
     } else {
     this.storage.set(task.taskId + "task",task);
     }
     task.isDone = true;
-    task.remaining = "PASSED";
-    
+    task.remaining = "PASSED"; 
     console.log(new Date().getDay());
-  }
+  });});}
 
   formatDuration(duration:number) {
     let convertedDuration; 
