@@ -1,3 +1,4 @@
+import { Notes } from './../notes/notes';
 import { MainFinancePage } from './../../finance-manager/main/main-finance';
 import { MenuPage } from './../../menu/menu';
 import { Services } from './../services';
@@ -10,7 +11,6 @@ import { Task } from './task';
 import { SetingsPage } from './../setings/setings';
 import { Component } from '@angular/core';
 import { NavController, FabContainer, AlertController } from 'ionic-angular';
-import { BackgroundMode } from '@ionic-native/background-mode';
 import { Storage } from '@ionic/storage';
 import { NewTaskPage } from '../new-task/new-task';
 @Component({
@@ -60,15 +60,13 @@ export class MainPage {
   }
 
 
-  constructor(private backgroundMode: BackgroundMode,
-     public navCtrl: NavController,
+  constructor(public navCtrl: NavController,
      public localNotifications: LocalNotifications,
        private datePipe: DatePipe,
         private storage: Storage,
         public services:Services,
         public alertCtrl: AlertController) {
     this.showTop = true;
-    this.backgroundMode.enable();
     this.storage.get('name').then((val) => {
       if(!val) {
         this.navCtrl.push(HomePage);
@@ -197,14 +195,14 @@ export class MainPage {
     task.durations[new Date().getDay()]  =    task.currentDuration;
     if(task.income && task.income != 0) {
       this.storage.get('amount').then((val) => {
-        let hours;
-        if (task.endTime - task.startTime *  2.77777778 * 0.00000001 > 1) {
-          hours =  ((task.endTime - task.startTime )*  2.77777778 * 0.00000001).toFixed(0);
-         } else {
-           hours = 0;
-         }
 
-         task.money += +task.income * +hours;
+          var diff = task.endTime - task.startTime ;
+          var days = Math.floor(diff / (60 * 60 * 24 * 1000));
+          var hours = Math.floor(diff / (60 * 60 * 1000)) - (days * 24);
+          var minutes = Math.floor(diff / (60 * 1000)) - ((days * 24 * 60) + (hours * 60));
+          var seconds = Math.floor(diff / 1000) - ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60));
+          console.log({ day: days, hour: hours, minute: minutes, second: seconds });
+         task.money += Math.round(+task.income * +minutes);
          console.log("monetty" + task.money);
       this.storage.set("amount",+val +  +task.income * +hours);
       this.storage.set(task.taskId + "task",task);
@@ -240,6 +238,10 @@ export class MainPage {
   goToAbout(){
     console.log( this.apps);
     this.apps = "top";
+  }
+  goToNotes(fab?: FabContainer){
+    fab.close();
+    this.navCtrl.push(Notes);
   }
  goToNewTask(fab?: FabContainer){
     fab.close();

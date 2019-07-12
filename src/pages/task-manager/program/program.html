@@ -1,11 +1,22 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-        Daily Program
+        Daily Program 
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content class="dropp">
+
+<ion-content >
+
+  <div>  <br>
+    <br>
+    <br>
+    
+    <div class="bg transperant-background">
+        <ion-calendar #calendar (onDaySelect)="onDaySelect($event)"></ion-calendar>
+
+    </div>
+    
     <br>
     <ion-fab left top #fab>
             <button color="dark"ion-fab (click)="goToNext(fab);">
@@ -13,16 +24,17 @@
                 </button>
           </ion-fab>
     
-  <h1 text-center>Daily Program <br>{{todaysDate | date: 'shortDate'}}</h1>
+  <h1 text-center>Daily Program <br></h1>
   <br>
+  
   <ul >
-      <div  *ngFor="let number of [00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]" class="transperant-background rounded item-background">
+      <div  *ngFor="let number of [00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]" class="background-component padd">
         <h3 *ngIf="number <= sleepHour && number >= wakeupHour " style="color:rgb(0, 104, 69); text-align:center"><br>{{number}}:00</h3>
         <h3 *ngIf="number > sleepHour || number < wakeupHour " style="color:brown; text-align:center"><br>{{number}}:00</h3>
         <h3 text-center *ngIf="number == wakeupHour" style="color:rgb(0, 104, 69)"> Wake up</h3>
         <h3 text-center *ngIf="number == sleepHour" style="color:rgb(0, 104, 69)"> Go to sleep</h3>
         <h3 text-center *ngIf="number == todaysDate.getHours()" style="color:rgb(0, 104, 69)"><br>Now   </h3>
-        <div *ngFor="let task of tasks" class="item-background rounded transperant-background">
+        <div *ngFor="let task of tasks"class="background-component">
             <div *ngIf="(task.time | slice:0:2) == number">
            <p *ngIf="task.isDone" (click)="showInfoStateChange(task)" style="color:black; text-align:center"> <ion-icon name="star" color="bright"></ion-icon> {{task.name}}      <br></p> 
       
@@ -39,17 +51,5 @@
     </ul>
     <br><br><br>  <br>
     <br>
-    <ion-fab left bottom #fab>
-        <button ion-fab color="dark">
-          <ion-icon name="arrow-dropright"></ion-icon>
-        </button>
-        <ion-fab-list side="right">
-          <button ion-fab   (click)="previousDay();">
-                <ion-icon name="rewind"></ion-icon>
-          </button>
-          <button ion-fab  (click)="nextDay();">
-                <ion-icon name="fastforward"></ion-icon>
-          </button>
-        </ion-fab-list>
-      </ion-fab>
+  </div>
 </ion-content>

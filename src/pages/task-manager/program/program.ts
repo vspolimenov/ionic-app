@@ -109,6 +109,12 @@ export class Program {
     this.navCtrl.pop();
 
   }
+  onDaySelect($event){
+    console.log($event.year,$event.month, $event);
+    this.todaysDate.setFullYear($event.year,$event.month, $event.date);
+    console.log(this.todaysDate);
+       this.setProgram();
+  }
   showInfoStateChange(task: Task) {
     if (task.showInfo) {
       task.showInfo = false;

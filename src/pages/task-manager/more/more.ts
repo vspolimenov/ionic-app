@@ -68,6 +68,7 @@ export class MorePage {
     this.storage.set('incomeSeq', 0);
     this.storage.set('currency', this.currency);
     this.storage.set('transactionSeq', 0);
+    this.storage.set('noteSeq', 0);
   }
   goBack() {
     this.navCtrl.pop();

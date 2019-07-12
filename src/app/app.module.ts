@@ -1,3 +1,4 @@
+import { Notes } from './../pages/task-manager/notes/notes';
 import { Transactions } from './../pages/finance-manager/transactions/transactions';
 import { FinanceProgram } from './../pages/finance-manager/finance-program/finance-program';
 import { EditIncomePage } from './../pages/finance-manager/edit-task/edit-task';
@@ -20,9 +21,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/task-manager/home/home';
-import { BackgroundMode } from '@ionic-native/background-mode';
 import { IonicStorageModule } from '@ionic/storage';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { CalendarModule } from 'ionic3-calendar-en';
 @NgModule({
   declarations: [
     MyApp,
@@ -39,12 +40,14 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
     Add,
     EditIncomePage,
     FinanceProgram,
-    Transactions
+    Transactions,
+    Notes
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    CalendarModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -62,11 +65,12 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
      Add,
      EditIncomePage,
      FinanceProgram,
-     Transactions
+     Transactions,
+    Notes
+     
   ],
   providers: [
     SplashScreen,
-    BackgroundMode,
     DatePipe,
     Services,
     LocalNotifications,

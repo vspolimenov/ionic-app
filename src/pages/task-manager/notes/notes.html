@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Notes
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="dropp">
+  <br>
+  <ion-fab left top #fab>
+    <button color="dark" ion-fab (click)="goToNext(fab);">
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+  </ion-fab>
+  <ion-fab right top #fab>
+    <ion-item>
+      <ion-input [(ngModel)]="currentNote.value" placeholder="New note" clearInput></ion-input>
+    </ion-item>
+    <button (click)="add();" style="padding:30px" ion-fab color="dark">
+      Add
+    </button>
+  </ion-fab>
+  <br>
+  <br>  <br>  <br>  <br>  <br>  <br>  <br>  <br>  
+  <ul>
+    <div *ngFor="let note of notes" class="item-background rounded transperant-background">
+      <h1 style="padding:10px"> {{note.value}}
+        <ion-icon (click)="remove(note)" name="close"></ion-icon>
+      </h1>
+    </div>
+  </ul>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+</ion-content>

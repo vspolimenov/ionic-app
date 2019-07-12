@@ -70,12 +70,14 @@
       </h3>
       <h3 class="h2-bg" *ngIf="task.isStarted && task.showInfo" class="text">
         <ion-item class="text">
-          <ion-label  (click)="stopTask(task)" >Stop Task
+          <ion-label  (click)="stopTask(task)" >Stop Task 
             <br>
           </ion-label>
         </ion-item>
-        
+      
       </h3>
+      
+      {{task.money}} 
       <h3 class="h2-bg" *ngIf="task.currentDuration != '0' && task.showInfo" class="text">
         {{task.currentDuration }}
       </h3>
@@ -102,6 +104,9 @@
       </button>
       <button ion-fab (click)="goToNewTask(fab,tasks);">
         <ion-icon name="add-circle"></ion-icon>
+      </button>
+      <button ion-fab (click)="goToNotes(fab);">
+        <ion-icon name="book"></ion-icon>
       </button>
     </ion-fab-list>
   </ion-fab>
